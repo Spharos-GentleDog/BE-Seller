@@ -1,0 +1,47 @@
+server:
+  port: 9999
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+      format_sql: true
+    show-sql: true
+
+  # Replication 설정 -> hikari와 jdbc-url을 사용하면 된다!
+  datasource:
+    url: jdbc:mysql://localhost:3306/gentle-dog-seller # 이부분을 바꿔야함
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+
+#  datasource:
+#    master:
+#      hikari:
+#        jdbc-url: jdbc:mysql://localhost:3306/payment
+#        read-only: false
+#        username: root
+#        password: 1234
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#    slave:
+#      hikari:
+#        jdbc-url: jdbc:mysql://localhost:3306/payment
+#        read-only: true
+#        username: root
+#        password: 1234
+#        driver-class-name: com.mysql.cj.jdbc.Driver
