@@ -34,8 +34,6 @@ public class SellerController {
 
     //이메일 중복 체크
     @PostMapping("/CheckEmail")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
     public BaseResponse<?> CheckEmail(@RequestBody RequestCheckEmail requestCheckEmail){
         log.info("이메일 중복체크: {}",requestCheckEmail);
         // Dto에 저장 된 결과 값을 반환
