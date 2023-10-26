@@ -6,6 +6,7 @@ import egenius.Seller.adaptor.web.request.RequestSignUpSeller;
 import egenius.Seller.application.ports.in.CheckEmailUseCase;
 import egenius.Seller.application.ports.in.SignUpUseCase;
 import egenius.Seller.application.ports.out.dto.CheckEmailDto;
+import egenius.Seller.global.common.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,20 +26,20 @@ public class SellerController {
 
     //회원가입
     @PostMapping("/signup")
-    public String signUp(@RequestBody RequestSignUpSeller requestSignUpSeller){
+    public BaseResponse<?> signUp(@RequestBody RequestSignUpSeller requestSignUpSeller){
         log.info("회원가입 정보:{}", requestSignUpSeller);
         signUpUseCase.signUpSeller(SignUpUseCase.SignUpQuery.toQuery(requestSignUpSeller));
-        return "회원가입";
+        return new BaseResponse<>();
     }
 
     //이메일 중복 체크
     @PostMapping("/CheckEmail")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public CheckEmailDto CheckEmail(@RequestBody RequestCheckEmail requestCheckEmail){
+    public BaseResponse<?> CheckEmail(@RequestBody RequestCheckEmail requestCheckEmail){
         log.info("이메일 중복체크: {}",requestCheckEmail);
         // Dto에 저장 된 결과 값을 반환
-        return checkEmailUseCase.checkEmail(CheckEmailUseCase.CheckEmailQuery.toQuery(requestCheckEmail));
+        return new BaseResponse<CheckEmailDto>(checkEmailUseCase.checkEmail(CheckEmailUseCase.CheckEmailQuery.toQuery(requestCheckEmail)));
     }
 
     /*
@@ -57,6 +58,6 @@ public class SellerController {
     //todo: 판매자 상태 변경
 
     //todo : 판매자 상품 목록 생성
-    
+
 
 }
