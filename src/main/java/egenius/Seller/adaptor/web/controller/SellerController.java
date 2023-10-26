@@ -5,8 +5,10 @@ import egenius.Seller.adaptor.web.request.RequestCheckEmail;
 import egenius.Seller.adaptor.web.request.RequestSignUpSeller;
 import egenius.Seller.application.ports.in.CheckEmailUseCase;
 import egenius.Seller.application.ports.in.SignUpUseCase;
+import egenius.Seller.application.ports.out.dto.CheckEmailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,7 +24,7 @@ public class SellerController {
     // 받은 데이터를 usecase로 전달
 
     //회원가입
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public String signUp(@RequestBody RequestSignUpSeller requestSignUpSeller){
         log.info("회원가입 정보:{}", requestSignUpSeller);
         signUpUseCase.signUpSeller(SignUpUseCase.SignUpQuery.toQuery(requestSignUpSeller));
@@ -31,17 +33,30 @@ public class SellerController {
 
     //이메일 중복 체크
     @PostMapping("/CheckEmail")
-    public String CheckEmail(@RequestBody RequestCheckEmail requestCheckEmail){
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public CheckEmailDto CheckEmail(@RequestBody RequestCheckEmail requestCheckEmail){
         log.info("이메일 중복체크: {}",requestCheckEmail);
-        checkEmailUseCase.checkEmail(CheckEmailUseCase.CheckEmailQuery.toQuery(requestCheckEmail));
-        return "이메일 중복 체크";
+        // Dto에 저장 된 결과 값을 반환
+        return checkEmailUseCase.checkEmail(CheckEmailUseCase.CheckEmailQuery.toQuery(requestCheckEmail));
     }
 
+    /*
+        API 정의서 나오는 대로 작업 할 것
+        //todo: 아이디 찾기
 
-    //todo: 비밀번호 재설정
+        //todo: 비밀번호 재설정
 
-    //todo: 아이디 찾기
+        // todo : 이메일 인증
 
-    //
+        // todo : 로그인
+    */
+
+    //todo: 계좌 생성
+
+    //todo: 판매자 상태 변경
+
+    //todo : 판매자 상품 목록 생성
+    
 
 }

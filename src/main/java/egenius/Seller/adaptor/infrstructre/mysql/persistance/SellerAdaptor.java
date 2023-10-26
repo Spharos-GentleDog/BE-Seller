@@ -46,17 +46,16 @@ public class SellerAdaptor implements SellerPort {
 
     @Transactional
     @Override
-    public String checkEmail(String seller_email) {
+    public boolean checkEmail(String seller_email) {
 
         Optional<SellerEntity> seller_email_entity = sellerRepository.findBysellerEmail(seller_email);
 
-
         if(seller_email_entity.isPresent()){
             log.info("회원 존재");
-            return "존재";
+            return true;
         }
         log.info("회원 존재하지 않음");
-        return "존재하지 않음";
+        return false;
     }
 
 }

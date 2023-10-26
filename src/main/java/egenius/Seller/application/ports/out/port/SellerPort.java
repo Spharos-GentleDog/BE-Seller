@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface SellerPort {
 
     Seller signUpSeller(Seller seller);
-    String checkEmail(String seller_email);
+    boolean checkEmail(String seller_email);
 
 }

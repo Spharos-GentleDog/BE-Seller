@@ -49,7 +49,7 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
     @Override
     public CheckEmailDto checkEmail(CheckEmailQuery checkEmailQuery) {
 
-        String seller_email = sellerPort.checkEmail(checkEmailQuery.getSeller_email());
+        boolean seller_email = sellerPort.checkEmail(checkEmailQuery.getSeller_email());
 
         return CheckEmailDto.formCheckEmail(seller_email);
     }
