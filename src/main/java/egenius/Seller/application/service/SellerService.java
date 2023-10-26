@@ -1,16 +1,20 @@
 package egenius.Seller.application.service;
 
+import egenius.Seller.application.ports.in.CheckEmailUseCase;
 import egenius.Seller.application.ports.in.SignUpUseCase;
+import egenius.Seller.application.ports.out.dto.CheckEmailDto;
 import egenius.Seller.application.ports.out.dto.SellerDto;
 import egenius.Seller.application.ports.out.port.SellerPort;
 import egenius.Seller.domain.Seller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
-public class SellerService implements SignUpUseCase {
+public class SellerService implements SignUpUseCase, CheckEmailUseCase {
 
     private final SellerPort sellerPort;
 
@@ -42,5 +46,11 @@ public class SellerService implements SignUpUseCase {
         return SellerDto.formSellers(seller);
     }
 
+    @Override
+    public CheckEmailDto checkEmail(CheckEmailQuery checkEmailQuery) {
 
+        String seller_email = sellerPort.checkEmail(checkEmailQuery.getSeller_email());
+
+        return CheckEmailDto.formCheckEmail(seller_email);
+    }
 }

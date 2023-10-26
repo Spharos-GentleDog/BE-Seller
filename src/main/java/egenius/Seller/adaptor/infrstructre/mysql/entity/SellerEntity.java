@@ -17,79 +17,79 @@ public class SellerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "seller_email", nullable = false, length = 20)
-    private String seller_email;
+    @Column(name = "sellerEmail", nullable = false, length = 20)
+    private String sellerEmail;
 
-    @Column(name = "business_number", nullable = false, length = 20)
-    private String business_number;
+    @Column(name = "businessNumber", nullable = false, length = 20)
+    private String businessNumber;
 
-    @Column(name = "seller_pw", nullable = false, length = 20)
-    private String seller_pw;
+    @Column(name = "sellerPw", nullable = false, length = 20)
+    private String sellerPw;
 
-    @Column(name = "mail_order_number", nullable = false, length = 20)
-    private String mail_order_number;
+    @Column(name = "mailOrderNumber", nullable = false, length = 20)
+    private String mailOrderNumber;
 
-    @Column(name = "brand_name", nullable = false, length = 20)
-    private String brand_name;
+    @Column(name = "brandName", nullable = false, length = 20)
+    private String brandName;
 
-    @Column(name = "brand_logo_img", nullable = false, length = 100)
-    private String brand_logo_img;
+    @Column(name = "brandLogoImg", nullable = false, length = 100)
+    private String brandLogoImg;
 
-    @Column(name = "brand_content", length = 150)
-    private String brand_content;
+    @Column(name = "brandContent", length = 150)
+    private String brandContent;
 
-    @Column(name = "homepage_url", length = 100)
-    private String homepage_url;
+    @Column(name = "homepageUrl", length = 100)
+    private String homepageUrl;
 
-    @Column(name = "business_type")
-    private Integer business_type;
+    @Column(name = "businessType")
+    private Integer businessType;
 
-    @Column(name = "company_name", nullable = false, length = 20)
-    private String company_name;
+    @Column(name = "companyName", nullable = false, length = 20)
+    private String companyName;
 
-    @Column(name = "company_add", length = 100)
-    private String company_add;
+    @Column(name = "companyAdd", length = 100)
+    private String companyAdd;
 
-    @Column(name = "opened_at", nullable = false )
-    private Date opened_at;
+    @Column(name = "openedAt", nullable = false )
+    private Date openedAt;
 
-    @Column(name = "seller_name", nullable = false, length = 20)
-    private String seller_name;
+    @Column(name = "sellerName", nullable = false, length = 20)
+    private String sellerName;
 
-    @Column(name = "call_center_number", nullable = false, length = 20)
-    private String call_center_number;
+    @Column(name = "callCenterNumber", nullable = false, length = 20)
+    private String callCenterNumber;
 
-    @Column(name = "phone_number", nullable = false, length = 20)
-    private String phone_number;
+    @Column(name = "phoneNumber", nullable = false, length = 20)
+    private String phoneNumber;
 
-    @Column(name = "seller_status", nullable = false)
-    private Integer seller_status;
+    @Column(name = "sellerStatus", nullable = false)
+    private Integer sellerStatus;
 
     @Column(name = "deactivate")
     private Date deactivate;
 
 
-    public static SellerEntity SignUpSeller(String seller_email, String business_number, String seller_pw, String mail_order_number,
-                                            String brand_name, String brand_logo_img, String brand_content, String homepage_url,
-                                            Integer business_type, String company_name, String company_add, Date opened_at,String seller_name,
-                                            String call_center_number, String phone_number, Integer seller_status) {
+    public static SellerEntity SignUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
+                                            String brandName, String brandLogoImg, String brandContent, String homepageUrl,
+                                            Integer businessType, String companyName, String companyAdd, Date openedAt,String sellerName,
+                                            String callCenterNumber, String phoneNumber, Integer sellerStatus) {
         return SellerEntity.builder()
-                .seller_email(seller_email)
-                .business_number(business_number)
-                .seller_pw(seller_pw)
-                .mail_order_number(mail_order_number)
-                .brand_name(brand_name)
-                .brand_logo_img(brand_logo_img)
-                .brand_content(brand_content)
-                .homepage_url(homepage_url)
-                .business_type(business_type)
-                .company_name(company_name)
-                .company_add(company_add)
-                .opened_at(opened_at)
-                .seller_name(seller_name)
-                .call_center_number(call_center_number)
-                .phone_number(phone_number)
-                .seller_status(seller_status)
+                .sellerEmail(sellerEmail)
+                .businessNumber(businessNumber)
+                .sellerPw(sellerPw)
+                .mailOrderNumber(mailOrderNumber)
+                .brandName(brandName)
+                .brandLogoImg(brandLogoImg)
+                .brandContent(brandContent)
+                .homepageUrl(homepageUrl)
+                .businessType(businessType)
+                .companyName(companyName)
+                .companyAdd(companyAdd)
+                .openedAt(openedAt)
+                .sellerName(sellerName)
+                .callCenterNumber(callCenterNumber)
+                .phoneNumber(phoneNumber)
+                .sellerStatus(sellerStatus)
                 .build();
     }
 

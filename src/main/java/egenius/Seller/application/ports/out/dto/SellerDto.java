@@ -1,7 +1,6 @@
 package egenius.Seller.application.ports.out.dto;
 
 import egenius.Seller.domain.Seller;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 

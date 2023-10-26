@@ -6,10 +6,14 @@ import egenius.Seller.application.ports.out.port.SellerPort;
 import egenius.Seller.domain.Seller;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class SellerAdaptor implements SellerPort {
 
     private final SellerRepository sellerRepository;
@@ -39,4 +43,20 @@ public class SellerAdaptor implements SellerPort {
                 ));
         return Seller.formSellerEntity(sellerEntity);
     }
+
+    @Transactional
+    @Override
+    public String checkEmail(String seller_email) {
+
+        Optional<SellerEntity> seller_email_entity = sellerRepository.findBysellerEmail(seller_email);
+
+
+        if(seller_email_entity.isPresent()){
+            log.info("회원 존재");
+            return "존재";
+        }
+        log.info("회원 존재하지 않음");
+        return "존재하지 않음";
+    }
+
 }
