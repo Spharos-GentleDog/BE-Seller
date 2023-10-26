@@ -1,10 +1,10 @@
-package egenius.Seller.adaptor.infrstructre.mysql.persistance;
+package egenius.Seller.adaptor.infrastructure.mysql.persistance;
 
-import egenius.Seller.adaptor.infrstructre.mysql.entity.SellerAccountEntity;
-import egenius.Seller.adaptor.infrstructre.mysql.repository.SellerAccountRepository;
+import egenius.Seller.adaptor.infrastructure.mysql.repository.SellerAccountRepository;
+import egenius.Seller.adaptor.infrastructure.mysql.entity.SellerAccountEntity;
 import egenius.Seller.application.ports.out.port.SellerAccountPort;
 import egenius.Seller.domain.SellerAccount;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +18,9 @@ public class SellerAccountAdaptor implements SellerAccountPort {
     public SellerAccount createSellerAccount(SellerAccount sellerAccount) {
 
         SellerAccountEntity sellerAccountEntity = sellerAccountRepository.save(SellerAccountEntity.createSellerAccount(
-                sellerAccount.getBank_name(),
-                sellerAccount.getAccount_number(),
-                sellerAccount.getOwner_name()
+                sellerAccount.getBankName(),
+                sellerAccount.getAccountNumber(),
+                sellerAccount.getOwnerName()
         ));
 
         return SellerAccount.formSellerAccountEntity(sellerAccountEntity);

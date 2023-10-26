@@ -1,9 +1,10 @@
-package egenius.Seller.adaptor.infrstructre.mysql.entity;
+package egenius.Seller.adaptor.infrastructure.mysql.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -17,61 +18,61 @@ public class SellerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "sellerEmail", nullable = false, length = 20)
+    @Column(name = "seller_email", nullable = false, length = 20)
     private String sellerEmail;
 
-    @Column(name = "businessNumber", nullable = false, length = 20)
+    @Column(name = "business_number", nullable = false, length = 20)
     private String businessNumber;
 
-    @Column(name = "sellerPw", nullable = false, length = 20)
+    @Column(name = "seller_pw", nullable = false, length = 20)
     private String sellerPw;
 
-    @Column(name = "mailOrderNumber", nullable = false, length = 20)
+    @Column(name = "mail_order_number", nullable = false, length = 20)
     private String mailOrderNumber;
 
-    @Column(name = "brandName", nullable = false, length = 20)
+    @Column(name = "brand_name", nullable = false, length = 20)
     private String brandName;
 
-    @Column(name = "brandLogoImg", nullable = false, length = 100)
+    @Column(name = "brand_logo_img", nullable = false, length = 100)
     private String brandLogoImg;
 
-    @Column(name = "brandContent", length = 150)
+    @Column(name = "brand_content", length = 150)
     private String brandContent;
 
-    @Column(name = "homepageUrl", length = 100)
+    @Column(name = "homepage_url", length = 100)
     private String homepageUrl;
 
-    @Column(name = "businessType")
+    @Column(name = "business_type", columnDefinition = "tinyint")
     private Integer businessType;
 
-    @Column(name = "companyName", nullable = false, length = 20)
+    @Column(name = "company_name", nullable = false, length = 20)
     private String companyName;
 
-    @Column(name = "companyAdd", length = 100)
-    private String companyAdd;
+    @Column(name = "company_address", length = 100)
+    private String companyAddress;
 
-    @Column(name = "openedAt", nullable = false )
+    @Column(name = "opened_at", nullable = false )
     private Date openedAt;
 
-    @Column(name = "sellerName", nullable = false, length = 20)
+    @Column(name = "seller_name", nullable = false, length = 20)
     private String sellerName;
 
-    @Column(name = "callCenterNumber", nullable = false, length = 20)
+    @Column(name = "call_center_number", nullable = false, length = 20)
     private String callCenterNumber;
 
-    @Column(name = "phoneNumber", nullable = false, length = 20)
+    @Column(name = "phone_number", nullable = false, length = 20)
     private String phoneNumber;
 
-    @Column(name = "sellerStatus", nullable = false)
+    @Column(name = "seller_status", nullable = false, columnDefinition = "tinyint")
     private Integer sellerStatus;
 
     @Column(name = "deactivate")
-    private Date deactivate;
+    private LocalDateTime deactivate;
 
 
-    public static SellerEntity SignUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
+    public static SellerEntity signUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
                                             String brandName, String brandLogoImg, String brandContent, String homepageUrl,
-                                            Integer businessType, String companyName, String companyAdd, Date openedAt,String sellerName,
+                                            Integer businessType, String companyName, String companyAddress, Date openedAt,String sellerName,
                                             String callCenterNumber, String phoneNumber, Integer sellerStatus) {
         return SellerEntity.builder()
                 .sellerEmail(sellerEmail)
@@ -84,7 +85,7 @@ public class SellerEntity {
                 .homepageUrl(homepageUrl)
                 .businessType(businessType)
                 .companyName(companyName)
-                .companyAdd(companyAdd)
+                .companyAddress(companyAddress)
                 .openedAt(openedAt)
                 .sellerName(sellerName)
                 .callCenterNumber(callCenterNumber)

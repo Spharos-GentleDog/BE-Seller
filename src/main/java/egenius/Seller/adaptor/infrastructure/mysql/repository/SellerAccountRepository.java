@@ -1,6 +1,6 @@
-package egenius.Seller.adaptor.infrstructre.mysql.repository;
+package egenius.Seller.adaptor.infrastructure.mysql.repository;
 
-import egenius.Seller.adaptor.infrstructre.mysql.entity.SellerAccountEntity;
+import egenius.Seller.adaptor.infrastructure.mysql.entity.SellerAccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

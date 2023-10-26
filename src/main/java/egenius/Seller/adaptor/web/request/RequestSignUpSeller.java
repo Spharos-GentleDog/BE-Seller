@@ -11,20 +11,20 @@ public class RequestSignUpSeller {
 
     // 회원 가입시 Front에서 전달 받는 데이터
 
-    private String seller_email;
-    private String business_number;
-    private String seller_pw;
-    private String mail_order_number;
-    private String brand_name;
-    private String brand_logo_img;
-    private String brand_content;
-    private String homepage_url;
-    private Integer business_type;
-    private String company_name;
-    private String company_add;
-    private Date opened_at;
-    private String seller_name;
-    private String call_center_number;
-    private String phone_number;
+    private String sellerEmail;
+    private String businessNumber;
+    private String sellerPw;
+    private String mailOrderNumber;
+    private String brandName;
+    private String brandLogoImg;
+    private String brandContent;
+    private String homepageUrl;
+    private Integer businessType;
+    private String companyName;
+    private String companyAddress;
+    private Date openedAt;
+    private String sellerName;
+    private String callCenterNumber;
+    private String phoneNumber;
 
 }

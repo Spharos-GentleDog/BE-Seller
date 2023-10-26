@@ -1,6 +1,5 @@
-package egenius.Seller.adaptor.infrstructre.mysql.entity;
+package egenius.Seller.adaptor.infrastructure.mysql.entity;
 
-import egenius.Seller.domain.SellerAccount;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,23 +16,24 @@ public class SellerAccountEntity {
     private Integer id;
 
     @Column(name = "bank_name", nullable = false, length = 20)
-    private String bank_name;
+    private String bankName;
 
     @Column(name = "account_number", nullable = false, length = 20)
-    private String account_number;
+    private String accountNumber;
 
     @Column(name = "owner_name", nullable = false, length = 10)
-    private String owner_name;
+    private String ownerName;
 
-    @Column(name = "seller_email", unique = true, nullable = false, length = 20)
-    private Integer seller_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    private SellerEntity sellerId;
 
-    public static SellerAccountEntity createSellerAccount (String bank_name, String account_number,
-                                                           String owner_name){
+    public static SellerAccountEntity createSellerAccount (String bankName, String accountNumber,
+                                                           String ownerName){
         return SellerAccountEntity.builder()
-                .bank_name(bank_name)
-                .account_number(account_number)
-                .owner_name(owner_name)
+                .bankName(bankName)
+                .accountNumber(accountNumber)
+                .ownerName(ownerName)
                 .build();
     }
 

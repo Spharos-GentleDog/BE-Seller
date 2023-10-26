@@ -10,11 +10,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CheckEmailDto {
 
-    private boolean seller_email;
+    private boolean sellerEmail;
 
-    public static CheckEmailDto formCheckEmail(boolean seller_email){
+    public static CheckEmailDto formCheckEmail(boolean sellerEmail){
         return CheckEmailDto.builder()
-                .seller_email(seller_email)
+                .sellerEmail(sellerEmail)
                 .build();
     }
 }
