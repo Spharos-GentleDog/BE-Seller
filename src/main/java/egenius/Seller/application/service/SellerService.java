@@ -25,21 +25,21 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
     public SellerDto signUpSeller(SignUpQuery signUpQuery) {
         // todo : Model Mapper 호라용하여 리팩토링
         Seller seller = sellerPort.signUpSeller(Seller.signUpSeller(
-                signUpQuery.getSeller_email(),
-                signUpQuery.getBusiness_number(),
-                signUpQuery.getSeller_pw(),
-                signUpQuery.getMail_order_number(),
-                signUpQuery.getBrand_name(),
-                signUpQuery.getBrand_logo_img(),
-                signUpQuery.getBrand_content(),
-                signUpQuery.getHomepage_url(),
-                signUpQuery.getBusiness_type(),
-                signUpQuery.getCompany_name(),
-                signUpQuery.getCompany_add(),
-                signUpQuery.getOpened_at(),
-                signUpQuery.getSeller_name(),
-                signUpQuery.getCall_center_number(),
-                signUpQuery.getPhone_number(),
+                signUpQuery.getSellerEmail(),
+                signUpQuery.getBusinessNumber(),
+                signUpQuery.getSellerPw(),
+                signUpQuery.getMailOrderNumber(),
+                signUpQuery.getBrandName(),
+                signUpQuery.getBrandLogoImg(),
+                signUpQuery.getBrandContent(),
+                signUpQuery.getHomepageUrl(),
+                signUpQuery.getBusinessType(),
+                signUpQuery.getCompanyName(),
+                signUpQuery.getCompanyAddress(),
+                signUpQuery.getOpenedAt(),
+                signUpQuery.getSellerName(),
+                signUpQuery.getCallCenterNumber(),
+                signUpQuery.getPhoneNumber(),
                 0
         ));
 
@@ -49,8 +49,8 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
     @Override
     public CheckEmailDto checkEmail(CheckEmailQuery checkEmailQuery) {
 
-        boolean seller_email = sellerPort.checkEmail(checkEmailQuery.getSeller_email());
+        boolean sellerEmail = sellerPort.checkEmail(checkEmailQuery.getSellerEmail());
 
-        return CheckEmailDto.formCheckEmail(seller_email);
+        return CheckEmailDto.formCheckEmail(sellerEmail);
     }
 }

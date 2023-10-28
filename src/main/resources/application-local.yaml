@@ -16,7 +16,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/gentle-dog-seller # 이부분을 바꿔야함
     username: root
-    password: 1234
+    password: 0107
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 eureka:

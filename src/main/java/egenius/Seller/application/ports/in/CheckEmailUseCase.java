@@ -14,11 +14,11 @@ public interface CheckEmailUseCase {
     @Builder
     class CheckEmailQuery{
 
-        private String seller_email;
+        private String sellerEmail;
 
         public static CheckEmailQuery toQuery(RequestCheckEmail requestEmailCheck){
             return CheckEmailQuery.builder()
-                    .seller_email(requestEmailCheck.getSeller_email())
+                    .sellerEmail(requestEmailCheck.getSellerEmail())
                     .build();
         }
     }

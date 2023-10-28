@@ -1,6 +1,6 @@
 package egenius.Seller.domain;
 
-import egenius.Seller.adaptor.infrstructre.mysql.entity.SellerEntity;
+import egenius.Seller.adaptor.infrastructure.mysql.entity.SellerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,67 +12,67 @@ import java.sql.Date;
 @AllArgsConstructor
 public class Seller {
 
-    private String seller_email;
-    private String business_number;
-    private String seller_pw;
-    private String mail_order_number;
-    private String brand_name;
-    private String brand_logo_img;
-    private String brand_content;
-    private String homepage_url;
-    private Integer business_type;
-    private String company_name;
-    private String company_add;
-    private Date opened_at;
-    private String seller_name;
-    private String call_center_number;
-    private String phone_number;
-    private Integer seller_status;
+    private String sellerEmail;
+    private String businessNumber;
+    private String sellerPw;
+    private String mailOrderNumber;
+    private String brandName;
+    private String brandLogoImg;
+    private String brandContent;
+    private String homepageUrl;
+    private Integer businessType;
+    private String companyName;
+    private String companyAddress;
+    private Date openedAt;
+    private String sellerName;
+    private String callCenterNumber;
+    private String phoneNumber;
+    private Integer sellerStatus;
     private Date deactivate;
 
 
-    public static Seller signUpSeller(String seller_email, String business_number, String seller_pw, String mail_order_number,
-                                      String brand_name, String brand_logo_img, String brand_content, String homepage_url,
-                                      Integer business_type, String company_name, String company_add, Date opened_at,
-                                      String seller_name, String call_center_number, String phone_number, Integer seller_status) {
+    public static Seller signUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
+                                      String brandName, String brandLogoImg, String brandContent, String homepageUrl,
+                                      Integer businessType, String companyName, String companyAddress, Date openedAt,
+                                      String sellerName, String callCenterNumber, String phoneNumber, Integer sellerStatus) {
         return Seller.builder()
-                .seller_email(seller_email)
-                .business_number(business_number)
-                .seller_pw(seller_pw)
-                .mail_order_number(mail_order_number)
-                .brand_name(brand_name)
-                .brand_logo_img(brand_logo_img)
-                .brand_content(brand_content)
-                .homepage_url(homepage_url)
-                .business_type(business_type)
-                .company_name(company_name)
-                .company_add(company_add)
-                .opened_at(opened_at)
-                .seller_name(seller_name)
-                .call_center_number(call_center_number)
-                .phone_number(phone_number)
-                .seller_status(seller_status)
+                .sellerEmail(sellerEmail)
+                .businessNumber(businessNumber)
+                .sellerPw(sellerPw)
+                .mailOrderNumber(mailOrderNumber)
+                .brandName(brandName)
+                .brandLogoImg(brandLogoImg)
+                .brandContent(brandContent)
+                .homepageUrl(homepageUrl)
+                .businessType(businessType)
+                .companyName(companyName)
+                .companyAddress(companyAddress)
+                .openedAt(openedAt)
+                .sellerName(sellerName)
+                .callCenterNumber(callCenterNumber)
+                .phoneNumber(phoneNumber)
+                .sellerStatus(sellerStatus)
                 .build();
     }
 
     public static Seller formSellerEntity(SellerEntity sellerEntity){
         return Seller.builder()
-                .seller_email(sellerEntity.getSellerEmail())
-                .business_number(sellerEntity.getBusinessNumber())
-                .seller_pw(sellerEntity.getSellerPw())
-                .mail_order_number(sellerEntity.getMailOrderNumber())
-                .brand_name(sellerEntity.getBrandName())
-                .brand_logo_img(sellerEntity.getBrandLogoImg())
-                .brand_content(sellerEntity.getBrandContent())
-                .homepage_url(sellerEntity.getHomepageUrl())
-                .business_type(sellerEntity.getBusinessType())
-                .company_name(sellerEntity.getCompanyName())
-                .company_add(sellerEntity.getCompanyAdd())
-                .opened_at(sellerEntity.getOpenedAt())
-                .seller_name(sellerEntity.getSellerName())
-                .call_center_number(sellerEntity.getCallCenterNumber())
-                .phone_number(sellerEntity.getPhoneNumber())
-                .seller_status(sellerEntity.getSellerStatus())
+                .sellerEmail(sellerEntity.getSellerEmail())
+                .businessNumber(sellerEntity.getBusinessNumber())
+                .sellerPw(sellerEntity.getSellerPw())
+                .mailOrderNumber(sellerEntity.getMailOrderNumber())
+                .brandName(sellerEntity.getBrandName())
+                .brandLogoImg(sellerEntity.getBrandLogoImg())
+                .brandContent(sellerEntity.getBrandContent())
+                .homepageUrl(sellerEntity.getHomepageUrl())
+                .businessType(sellerEntity.getBusinessType())
+                .companyName(sellerEntity.getCompanyName())
+                .companyAddress(sellerEntity.getCompanyAddress())
+                .openedAt(sellerEntity.getOpenedAt())
+                .sellerName(sellerEntity.getSellerName())
+                .callCenterNumber(sellerEntity.getCallCenterNumber())
+                .phoneNumber(sellerEntity.getPhoneNumber())
+                .sellerStatus(sellerEntity.getSellerStatus())
                 .build();
     }
 
