@@ -9,12 +9,14 @@ import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-@Builder
 public class RequestCheckEmail {
 
     // input model
     // Web adaptor의 일부분으로 web에서 받아온 데이터의 유효성 검증을 수행 한다
     // 일종의 DTO
+
+    // SRP원칙에 의해 usecase 마다 별도의 input model을 사용해야 한다
+    // => 형식은 동일 해도 각 기능마다 유효성 검증이나, 파라미터의 변경이 있을 수 있기 때문
 
     // controller 단에서 @RequestBody annotantion 과 함께 @Valid annotantion을 함꼐 작성하면
     // RequestBody 로 들어오는 객체에 대해서 검증을 수행한다

@@ -4,6 +4,7 @@ import egenius.Seller.application.ports.in.CheckEmailUseCase;
 import egenius.Seller.application.ports.in.SignUpUseCase;
 import egenius.Seller.application.ports.out.dto.CheckEmailDto;
 import egenius.Seller.application.ports.out.dto.SellerDto;
+import egenius.Seller.application.ports.out.port.CheckEmailPort;
 import egenius.Seller.application.ports.out.port.SellerPort;
 import egenius.Seller.domain.Seller;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,11 @@ import java.util.Optional;
 public class SellerService implements SignUpUseCase, CheckEmailUseCase {
 
     private final SellerPort sellerPort;
+    private final CheckEmailPort checkEmailPort;
 
+    // 빈약한 도메인 모델의 비지니스 로직 구현 => 유스케이스 단에서 비지니스 로직 처리
     // Usecase 구현 : Dto로 데이터 전달, 서비스 로직 수행
+
 
     //회원가입 판매자 생성
     @Override
@@ -46,10 +50,11 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
         return SellerDto.formSellers(seller);
     }
 
+    // 이메일 중복 확인
     @Override
     public CheckEmailDto checkEmail(CheckEmailQuery checkEmailQuery) {
 
-        boolean sellerEmail = sellerPort.checkEmail(checkEmailQuery.getSellerEmail());
+        boolean sellerEmail = checkEmailPort.checkEmail(checkEmailQuery.getSellerEmail());
 
         return CheckEmailDto.formCheckEmail(sellerEmail);
     }

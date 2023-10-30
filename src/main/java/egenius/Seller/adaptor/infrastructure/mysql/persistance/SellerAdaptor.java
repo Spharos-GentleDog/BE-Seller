@@ -2,6 +2,7 @@ package egenius.Seller.adaptor.infrastructure.mysql.persistance;
 
 import egenius.Seller.adaptor.infrastructure.mysql.entity.SellerEntity;
 import egenius.Seller.adaptor.infrastructure.mysql.repository.SellerRepository;
+import egenius.Seller.application.ports.out.port.CheckEmailPort;
 import egenius.Seller.application.ports.out.port.SellerPort;
 import egenius.Seller.domain.Seller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +15,10 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SellerAdaptor implements SellerPort {
+public class SellerAdaptor implements SellerPort, CheckEmailPort {
 
+
+    // 엔터티의 상태 변화를 구현
     private final SellerRepository sellerRepository;
 
     // 회원가입
