@@ -23,7 +23,7 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
     //회원가입 판매자 생성
     @Override
     public SellerDto signUpSeller(SignUpQuery signUpQuery) {
-        // todo : Model Mapper 호라용하여 리팩토링
+        // todo : Model Mapper 활용하여 리팩토링
         Seller seller = sellerPort.signUpSeller(Seller.signUpSeller(
                 signUpQuery.getSellerEmail(),
                 signUpQuery.getBusinessNumber(),
