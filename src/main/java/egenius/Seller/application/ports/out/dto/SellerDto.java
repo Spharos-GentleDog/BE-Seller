@@ -1,10 +1,11 @@
 package egenius.Seller.application.ports.out.dto;
 
-import egenius.Seller.domain.Seller;
+import egenius.Seller.adaptor.infrastructure.mysql.enums.BusinessTypes;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -18,31 +19,37 @@ public class SellerDto {
     private String brandLogoImg;
     private String brandContent;
     private String homepageUrl;
-    private Integer businessType;
+    private String businessType;
     private String companyName;
     private String companyAddress;
-    private Date openedAt;
+    private LocalDate openedAt;
     private String sellerName;
     private String callCenterNumber;
     private String phoneNumber;
+    private String sellerStatus;
 
-    public static SellerDto formSellers(Seller seller){
+    //Seller Ent
+    public static SellerDto formSellers(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
+                                        String brandName, String brandLogoImg, String brandContent, String homepageUrl,
+                                        String businessType, String companyName, String companyAddress, LocalDate openedAt,
+                                        String sellerName, String callCenterNumber, String phoneNumber, String sellerStatus){
         return SellerDto.builder()
-                .sellerEmail(seller.getSellerEmail())
-                .businessNumber(seller.getBusinessNumber())
-                .sellerPw(seller.getSellerPw())
-                .mailOrderNumber(seller.getMailOrderNumber())
-                .brandName(seller.getBrandName())
-                .brandLogoImg(seller.getBrandLogoImg())
-                .brandContent(seller.getBrandContent())
-                .homepageUrl(seller.getHomepageUrl())
-                .businessType(seller.getBusinessType())
-                .companyName(seller.getCompanyName())
-                .companyAddress(seller.getCompanyAddress())
-                .openedAt(seller.getOpenedAt())
-                .sellerName(seller.getSellerName())
-                .callCenterNumber(seller.getCallCenterNumber())
-                .phoneNumber(seller.getPhoneNumber())
+                .sellerEmail(sellerEmail)
+                .businessNumber(businessNumber)
+                .sellerPw(sellerPw)
+                .mailOrderNumber(mailOrderNumber)
+                .brandName(brandName)
+                .brandLogoImg(brandLogoImg)
+                .brandContent(brandContent)
+                .homepageUrl(homepageUrl)
+                .businessType(businessType)
+                .companyName(companyName)
+                .companyAddress(companyAddress)
+                .openedAt(openedAt)
+                .sellerName(sellerName)
+                .callCenterNumber(callCenterNumber)
+                .phoneNumber(phoneNumber)
+                .sellerStatus(sellerStatus)
                 .build();
 
     }

@@ -24,7 +24,7 @@ public class SellerAccountEntity {
     @Column(name = "owner_name", nullable = false, length = 10)
     private String ownerName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private SellerEntity sellerId;
 

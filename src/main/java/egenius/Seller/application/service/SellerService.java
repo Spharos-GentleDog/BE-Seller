@@ -28,7 +28,7 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
     @Override
     public SellerDto signUpSeller(SignUpQuery signUpQuery) {
         // todo : Model Mapper 활용하여 리팩토링
-        Seller seller = sellerPort.signUpSeller(Seller.signUpSeller(
+        SellerDto sellerDto = sellerPort.signUpSeller(Seller.signUpSeller(
                 signUpQuery.getSellerEmail(),
                 signUpQuery.getBusinessNumber(),
                 signUpQuery.getSellerPw(),
@@ -44,10 +44,10 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
                 signUpQuery.getSellerName(),
                 signUpQuery.getCallCenterNumber(),
                 signUpQuery.getPhoneNumber(),
-                0
+                "대기"
         ));
 
-        return SellerDto.formSellers(seller);
+        return sellerDto;
     }
 
     // 이메일 중복 확인

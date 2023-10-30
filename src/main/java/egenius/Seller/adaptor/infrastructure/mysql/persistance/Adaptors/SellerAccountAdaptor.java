@@ -1,4 +1,4 @@
-package egenius.Seller.adaptor.infrastructure.mysql.persistance;
+package egenius.Seller.adaptor.infrastructure.mysql.persistance.Adaptors;
 
 import egenius.Seller.adaptor.infrastructure.mysql.repository.SellerAccountRepository;
 import egenius.Seller.adaptor.infrastructure.mysql.entity.SellerAccountEntity;

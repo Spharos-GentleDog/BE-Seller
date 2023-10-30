@@ -20,21 +20,21 @@ public class Seller {
     private String brandLogoImg;
     private String brandContent;
     private String homepageUrl;
-    private Integer businessType;
+    private String businessType;
     private String companyName;
     private String companyAddress;
     private Date openedAt;
     private String sellerName;
     private String callCenterNumber;
     private String phoneNumber;
-    private Integer sellerStatus;
+    private String sellerStatus;
     private Date deactivate;
 
 
     public static Seller signUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
                                       String brandName, String brandLogoImg, String brandContent, String homepageUrl,
-                                      Integer businessType, String companyName, String companyAddress, Date openedAt,
-                                      String sellerName, String callCenterNumber, String phoneNumber, Integer sellerStatus) {
+                                      String businessType, String companyName, String companyAddress, Date openedAt,
+                                      String sellerName, String callCenterNumber, String phoneNumber, String sellerStatus) {
         return Seller.builder()
                 .sellerEmail(sellerEmail)
                 .businessNumber(businessNumber)
@@ -55,26 +55,27 @@ public class Seller {
                 .build();
     }
 
-    public static Seller formSellerEntity(SellerEntity sellerEntity){
-        return Seller.builder()
-                .sellerEmail(sellerEntity.getSellerEmail())
-                .businessNumber(sellerEntity.getBusinessNumber())
-                .sellerPw(sellerEntity.getSellerPw())
-                .mailOrderNumber(sellerEntity.getMailOrderNumber())
-                .brandName(sellerEntity.getBrandName())
-                .brandLogoImg(sellerEntity.getBrandLogoImg())
-                .brandContent(sellerEntity.getBrandContent())
-                .homepageUrl(sellerEntity.getHomepageUrl())
-                .businessType(sellerEntity.getBusinessType())
-                .companyName(sellerEntity.getCompanyName())
-                .companyAddress(sellerEntity.getCompanyAddress())
-                .openedAt(sellerEntity.getOpenedAt())
-                .sellerName(sellerEntity.getSellerName())
-                .callCenterNumber(sellerEntity.getCallCenterNumber())
-                .phoneNumber(sellerEntity.getPhoneNumber())
-                .sellerStatus(sellerEntity.getSellerStatus())
-                .build();
-    }
+//    // 이게 왜 여기 있지.......???????????????
+//    public static Seller formSellerEntity(SellerEntity sellerEntity){
+//        return Seller.builder()
+//                .sellerEmail(sellerEntity.getSellerEmail())
+//                .businessNumber(sellerEntity.getBusinessNumber())
+//                .sellerPw(sellerEntity.getSellerPw())
+//                .mailOrderNumber(sellerEntity.getMailOrderNumber())
+//                .brandName(sellerEntity.getBrandName())
+//                .brandLogoImg(sellerEntity.getBrandLogoImg())
+//                .brandContent(sellerEntity.getBrandContent())
+//                .homepageUrl(sellerEntity.getHomepageUrl())
+//                .businessType(sellerEntity.getBusinessType())
+//                .companyName(sellerEntity.getCompanyName())
+//                .companyAddress(sellerEntity.getCompanyAddress())
+//                .openedAt(sellerEntity.getOpenedAt())
+//                .sellerName(sellerEntity.getSellerName())
+//                .callCenterNumber(sellerEntity.getCallCenterNumber())
+//                .phoneNumber(sellerEntity.getPhoneNumber())
+//                .sellerStatus(sellerEntity.getSellerStatus())
+//                .build();
+//    }
 
 
 }

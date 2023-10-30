@@ -1,5 +1,8 @@
 package egenius.Seller.adaptor.infrastructure.mysql.entity;
 
+import egenius.Seller.adaptor.infrastructure.mysql.enums.SellerStatus;
+import egenius.Seller.adaptor.infrastructure.mysql.persistance.EnumConverter.BusinessTypeConverter;
+import egenius.Seller.adaptor.infrastructure.mysql.persistance.EnumConverter.SellerStatusConvertor;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,7 +45,8 @@ public class SellerEntity {
     @Column(name = "homepage_url", length = 100)
     private String homepageUrl;
 
-    @Column(name = "business_type", columnDefinition = "tinyint")
+    @Column(name = "business_type")
+    @Convert(converter = BusinessTypeConverter.class)
     private Integer businessType;
 
     @Column(name = "company_name", nullable = false, length = 20)
@@ -64,6 +68,7 @@ public class SellerEntity {
     private String phoneNumber;
 
     @Column(name = "seller_status", nullable = false, columnDefinition = "tinyint")
+    @Convert(converter = SellerStatusConvertor.class)
     private Integer sellerStatus;
 
     @Column(name = "deactivate")
@@ -72,7 +77,7 @@ public class SellerEntity {
 
     public static SellerEntity signUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
                                             String brandName, String brandLogoImg, String brandContent, String homepageUrl,
-                                            Integer businessType, String companyName, String companyAddress, Date openedAt,String sellerName,
+                                            Integer businessType, String companyName, String companyAddress, Date openedAt, String sellerName,
                                             String callCenterNumber, String phoneNumber, Integer sellerStatus) {
         return SellerEntity.builder()
                 .sellerEmail(sellerEmail)

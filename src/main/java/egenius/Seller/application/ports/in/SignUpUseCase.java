@@ -25,7 +25,7 @@ public interface SignUpUseCase {
         private String brandLogoImg;
         private String brandContent;
         private String homepageUrl;
-        private Integer businessType;
+        private String businessType;
         private String companyName;
         private String companyAddress;
         private Date openedAt;
