@@ -1,4 +1,4 @@
-package egenius.Seller.adaptor.infrstructre.mysql.entity;
+package egenius.Seller.adaptor.infrastructure.mysql.entity;
 
 
 import jakarta.persistence.*;
@@ -19,21 +19,22 @@ public class SellerProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "seller_email", unique = true, nullable = false, length = 20)
-    private Integer seller_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    private SellerEntity sellerId;
 
     @Column(name = "product_id", unique = true, nullable = false)
-    private Long product_id;
+    private Long productId;
 
     @Column(name = "display_status", nullable = false)
-    private Integer display_status;
+    private Integer displayStatus;
 
     @Column(name = "sales_status", nullable = false)
-    private Integer sales_status;
+    private Integer salesStatus;
 
     @Column(name = "sales_count", nullable = false)
-    private  Integer sales_count;
+    private  Integer salesCount;
 
     @Column(name = "save_count", nullable = true)
-    private  Integer save_count;
+    private  Integer saveCount;
 }
