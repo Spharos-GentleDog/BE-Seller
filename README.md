@@ -1,1 +1,1 @@
-# BE-Seller
+# BE-Vendor
