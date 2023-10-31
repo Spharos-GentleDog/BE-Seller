@@ -1,10 +1,8 @@
 package egenius.Seller.adaptor.web.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 public class RequestSignUpSeller {
@@ -13,16 +11,16 @@ public class RequestSignUpSeller {
 
     private String sellerEmail;
     private String businessNumber;
-    private String sellerPw;
+    private String sellerPassword;
     private String mailOrderNumber;
     private String brandName;
-    private String brandLogoImg;
+    private String brandLogoImageUrl;
     private String brandContent;
     private String homepageUrl;
     private String businessType;
     private String companyName;
     private String companyAddress;
-    private Date openedAt;
+    private LocalDate openedAt;
     private String sellerName;
     private String callCenterNumber;
     private String phoneNumber;

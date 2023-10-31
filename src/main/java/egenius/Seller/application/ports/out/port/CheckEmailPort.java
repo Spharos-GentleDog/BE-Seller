@@ -1,5 +1,7 @@
 package egenius.Seller.application.ports.out.port;
 
+import egenius.Seller.application.ports.out.dto.CheckEmailDto;
+
 public interface CheckEmailPort {
 
     //out usecase
@@ -7,5 +9,5 @@ public interface CheckEmailPort {
     // SRP 원칙에 의해 각 기능 마다 다른 uscase를 사용해야한다
     // SRP 원칙에 따라 sellerPort 와 분리
 
-    boolean checkEmail(String sellerEmail);
+    CheckEmailDto checkEmail(String sellerEmail);
 }

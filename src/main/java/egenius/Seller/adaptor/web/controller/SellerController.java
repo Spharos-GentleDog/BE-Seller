@@ -3,8 +3,10 @@ package egenius.Seller.adaptor.web.controller;
 
 import egenius.Seller.adaptor.web.request.RequestCheckEmail;
 import egenius.Seller.adaptor.web.request.RequestSignUpSeller;
-import egenius.Seller.application.ports.in.CheckEmailUseCase;
-import egenius.Seller.application.ports.in.SignUpUseCase;
+import egenius.Seller.application.ports.in.port.CheckEmailUseCase;
+import egenius.Seller.application.ports.in.port.SignUpUseCase;
+import egenius.Seller.application.ports.in.query.CheckEmailQuery;
+import egenius.Seller.application.ports.in.query.SignUpQuery;
 import egenius.Seller.application.ports.out.dto.CheckEmailDto;
 import egenius.Seller.global.common.response.BaseResponse;
 import jakarta.validation.Valid;
@@ -28,7 +30,7 @@ public class SellerController {
     @PostMapping("/signup")
     public BaseResponse<?> signUp(@RequestBody RequestSignUpSeller requestSignUpSeller){
         log.info("회원가입 정보:{}", requestSignUpSeller);
-        signUpUseCase.signUpSeller(SignUpUseCase.SignUpQuery.toQuery(requestSignUpSeller));
+        signUpUseCase.signUpSeller(SignUpQuery.toQuery(requestSignUpSeller));
         return new BaseResponse<>();
     }
 
@@ -37,7 +39,7 @@ public class SellerController {
     public BaseResponse<?> CheckEmail(@RequestBody @Valid RequestCheckEmail requestCheckEmail){
         log.info("이메일 중복체크: {}",requestCheckEmail);
         // Dto에 저장 된 결과 값을 반환
-        return new BaseResponse<CheckEmailDto>(checkEmailUseCase.checkEmail(CheckEmailUseCase.CheckEmailQuery.toQuery(requestCheckEmail)));
+        return new BaseResponse<CheckEmailDto>(checkEmailUseCase.checkEmail(CheckEmailQuery.toQuery(requestCheckEmail)));
     }
 
     /*

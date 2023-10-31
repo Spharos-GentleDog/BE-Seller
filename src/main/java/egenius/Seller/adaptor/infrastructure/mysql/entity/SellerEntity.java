@@ -1,12 +1,9 @@
 package egenius.Seller.adaptor.infrastructure.mysql.entity;
 
-import egenius.Seller.adaptor.infrastructure.mysql.enums.SellerStatus;
-import egenius.Seller.adaptor.infrastructure.mysql.persistance.EnumConverter.BusinessTypeConverter;
-import egenius.Seller.adaptor.infrastructure.mysql.persistance.EnumConverter.SellerStatusConvertor;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -27,8 +24,8 @@ public class SellerEntity {
     @Column(name = "business_number", nullable = false, length = 20)
     private String businessNumber;
 
-    @Column(name = "seller_pw", nullable = false, length = 20)
-    private String sellerPw;
+    @Column(name = "seller_password", nullable = false, length = 20)
+    private String sellerPassword;
 
     @Column(name = "mail_order_number", nullable = false, length = 20)
     private String mailOrderNumber;
@@ -36,8 +33,8 @@ public class SellerEntity {
     @Column(name = "brand_name", nullable = false, length = 20)
     private String brandName;
 
-    @Column(name = "brand_logo_img", nullable = false, length = 100)
-    private String brandLogoImg;
+    @Column(name = "brand_logo_image_url", nullable = false, length = 100)
+    private String brandLogoImageUrl;
 
     @Column(name = "brand_content", length = 150)
     private String brandContent;
@@ -46,7 +43,6 @@ public class SellerEntity {
     private String homepageUrl;
 
     @Column(name = "business_type")
-    @Convert(converter = BusinessTypeConverter.class)
     private Integer businessType;
 
     @Column(name = "company_name", nullable = false, length = 20)
@@ -56,7 +52,7 @@ public class SellerEntity {
     private String companyAddress;
 
     @Column(name = "opened_at", nullable = false )
-    private Date openedAt;
+    private LocalDate openedAt;
 
     @Column(name = "seller_name", nullable = false, length = 20)
     private String sellerName;
@@ -68,24 +64,23 @@ public class SellerEntity {
     private String phoneNumber;
 
     @Column(name = "seller_status", nullable = false, columnDefinition = "tinyint")
-    @Convert(converter = SellerStatusConvertor.class)
     private Integer sellerStatus;
 
     @Column(name = "deactivate")
     private LocalDateTime deactivate;
 
 
-    public static SellerEntity signUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
-                                            String brandName, String brandLogoImg, String brandContent, String homepageUrl,
-                                            Integer businessType, String companyName, String companyAddress, Date openedAt, String sellerName,
+    public static SellerEntity signUpSeller(String sellerEmail, String businessNumber, String sellerPassword, String mailOrderNumber,
+                                            String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
+                                            Integer businessType, String companyName, String companyAddress, LocalDate openedAt, String sellerName,
                                             String callCenterNumber, String phoneNumber, Integer sellerStatus) {
         return SellerEntity.builder()
                 .sellerEmail(sellerEmail)
                 .businessNumber(businessNumber)
-                .sellerPw(sellerPw)
+                .sellerPassword(sellerPassword)
                 .mailOrderNumber(mailOrderNumber)
                 .brandName(brandName)
-                .brandLogoImg(brandLogoImg)
+                .brandLogoImageUrl(brandLogoImageUrl)
                 .brandContent(brandContent)
                 .homepageUrl(homepageUrl)
                 .businessType(businessType)

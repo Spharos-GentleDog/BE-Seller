@@ -1,11 +1,15 @@
 package egenius.Seller.domain;
 
 import egenius.Seller.adaptor.infrastructure.mysql.entity.SellerEntity;
+import egenius.Seller.domain.enums.BusinessTypes;
+import egenius.Seller.domain.enums.SellerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -14,34 +18,34 @@ public class Seller {
 
     private String sellerEmail;
     private String businessNumber;
-    private String sellerPw;
+    private String sellerPassword;
     private String mailOrderNumber;
     private String brandName;
-    private String brandLogoImg;
+    private String brandLogoImageUrl;
     private String brandContent;
     private String homepageUrl;
-    private String businessType;
+    private BusinessTypes businessType;
     private String companyName;
     private String companyAddress;
-    private Date openedAt;
+    private LocalDate openedAt;
     private String sellerName;
     private String callCenterNumber;
     private String phoneNumber;
-    private String sellerStatus;
-    private Date deactivate;
+    private SellerStatus sellerStatus;
+    private LocalDateTime deactivate;
 
 
-    public static Seller signUpSeller(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
-                                      String brandName, String brandLogoImg, String brandContent, String homepageUrl,
-                                      String businessType, String companyName, String companyAddress, Date openedAt,
-                                      String sellerName, String callCenterNumber, String phoneNumber, String sellerStatus) {
+    public static Seller signUpSeller(String sellerEmail, String businessNumber, String sellerPassword, String mailOrderNumber,
+                                      String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
+                                      BusinessTypes businessType, String companyName, String companyAddress, LocalDate openedAt,
+                                      String sellerName, String callCenterNumber, String phoneNumber, SellerStatus sellerStatus) {
         return Seller.builder()
                 .sellerEmail(sellerEmail)
                 .businessNumber(businessNumber)
-                .sellerPw(sellerPw)
+                .sellerPassword(sellerPassword)
                 .mailOrderNumber(mailOrderNumber)
                 .brandName(brandName)
-                .brandLogoImg(brandLogoImg)
+                .brandLogoImageUrl(brandLogoImageUrl)
                 .brandContent(brandContent)
                 .homepageUrl(homepageUrl)
                 .businessType(businessType)
@@ -54,28 +58,6 @@ public class Seller {
                 .sellerStatus(sellerStatus)
                 .build();
     }
-
-//    // 이게 왜 여기 있지.......???????????????
-//    public static Seller formSellerEntity(SellerEntity sellerEntity){
-//        return Seller.builder()
-//                .sellerEmail(sellerEntity.getSellerEmail())
-//                .businessNumber(sellerEntity.getBusinessNumber())
-//                .sellerPw(sellerEntity.getSellerPw())
-//                .mailOrderNumber(sellerEntity.getMailOrderNumber())
-//                .brandName(sellerEntity.getBrandName())
-//                .brandLogoImg(sellerEntity.getBrandLogoImg())
-//                .brandContent(sellerEntity.getBrandContent())
-//                .homepageUrl(sellerEntity.getHomepageUrl())
-//                .businessType(sellerEntity.getBusinessType())
-//                .companyName(sellerEntity.getCompanyName())
-//                .companyAddress(sellerEntity.getCompanyAddress())
-//                .openedAt(sellerEntity.getOpenedAt())
-//                .sellerName(sellerEntity.getSellerName())
-//                .callCenterNumber(sellerEntity.getCallCenterNumber())
-//                .phoneNumber(sellerEntity.getPhoneNumber())
-//                .sellerStatus(sellerEntity.getSellerStatus())
-//                .build();
-//    }
 
 
 }

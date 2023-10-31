@@ -1,6 +1,6 @@
-package egenius.Seller.adaptor.infrastructure.mysql.persistance.EnumConverter;
+package egenius.Seller.adaptor.infrastructure.mysql.persistance.Converter;
 
-import egenius.Seller.adaptor.infrastructure.mysql.enums.BusinessTypes;
+import egenius.Seller.domain.enums.BusinessTypes;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.springframework.stereotype.Component;

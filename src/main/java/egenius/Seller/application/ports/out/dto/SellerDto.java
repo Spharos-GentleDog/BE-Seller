@@ -1,22 +1,21 @@
 package egenius.Seller.application.ports.out.dto;
 
-import egenius.Seller.adaptor.infrastructure.mysql.enums.BusinessTypes;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter
 @Builder
 public class SellerDto {
 
+    // 비지니스 로직 상 결과 값으로 받을 정보
     private String sellerEmail;
     private String businessNumber;
-    private String sellerPw;
+    private String sellerPassword;
     private String mailOrderNumber;
     private String brandName;
-    private String brandLogoImg;
+    private String brandLogoImageUrl;
     private String brandContent;
     private String homepageUrl;
     private String businessType;
@@ -28,18 +27,17 @@ public class SellerDto {
     private String phoneNumber;
     private String sellerStatus;
 
-    //Seller Ent
-    public static SellerDto formSellers(String sellerEmail, String businessNumber, String sellerPw, String mailOrderNumber,
-                                        String brandName, String brandLogoImg, String brandContent, String homepageUrl,
+    public static SellerDto formSellers(String sellerEmail, String businessNumber, String sellerPassword, String mailOrderNumber,
+                                        String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                         String businessType, String companyName, String companyAddress, LocalDate openedAt,
                                         String sellerName, String callCenterNumber, String phoneNumber, String sellerStatus){
         return SellerDto.builder()
                 .sellerEmail(sellerEmail)
                 .businessNumber(businessNumber)
-                .sellerPw(sellerPw)
+                .sellerPassword(sellerPassword)
                 .mailOrderNumber(mailOrderNumber)
                 .brandName(brandName)
-                .brandLogoImg(brandLogoImg)
+                .brandLogoImageUrl(brandLogoImageUrl)
                 .brandContent(brandContent)
                 .homepageUrl(homepageUrl)
                 .businessType(businessType)

@@ -1,7 +1,9 @@
 package egenius.Seller.application.service;
 
-import egenius.Seller.application.ports.in.CheckEmailUseCase;
-import egenius.Seller.application.ports.in.SignUpUseCase;
+import egenius.Seller.application.ports.in.port.CheckEmailUseCase;
+import egenius.Seller.application.ports.in.port.SignUpUseCase;
+import egenius.Seller.application.ports.in.query.CheckEmailQuery;
+import egenius.Seller.application.ports.in.query.SignUpQuery;
 import egenius.Seller.application.ports.out.dto.CheckEmailDto;
 import egenius.Seller.application.ports.out.dto.SellerDto;
 import egenius.Seller.application.ports.out.port.CheckEmailPort;
@@ -9,8 +11,6 @@ import egenius.Seller.application.ports.out.port.SellerPort;
 import egenius.Seller.domain.Seller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 
 @Service
@@ -28,13 +28,19 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
     @Override
     public SellerDto signUpSeller(SignUpQuery signUpQuery) {
         // todo : Model Mapper 활용하여 리팩토링
+        // seller status , businessType
+        // -> domain: Enum
+        // -> request : String (코드 값 : 0, 1)
+        // -> DB : Integer 코드 값
+        // web 단 : 코드로 들어온 값을 enum으로 변경 해줘야 한다
+        // adaptor 단 : enum을 코드 값으로 변경 해줘야 한다
         SellerDto sellerDto = sellerPort.signUpSeller(Seller.signUpSeller(
                 signUpQuery.getSellerEmail(),
                 signUpQuery.getBusinessNumber(),
-                signUpQuery.getSellerPw(),
+                signUpQuery.getSellerPassword(),
                 signUpQuery.getMailOrderNumber(),
                 signUpQuery.getBrandName(),
-                signUpQuery.getBrandLogoImg(),
+                signUpQuery.getBrandLogoImageUrl(),
                 signUpQuery.getBrandContent(),
                 signUpQuery.getHomepageUrl(),
                 signUpQuery.getBusinessType(),
@@ -44,7 +50,7 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
                 signUpQuery.getSellerName(),
                 signUpQuery.getCallCenterNumber(),
                 signUpQuery.getPhoneNumber(),
-                "대기"
+                signUpQuery.getSellerStatus()
         ));
 
         return sellerDto;
@@ -54,8 +60,8 @@ public class SellerService implements SignUpUseCase, CheckEmailUseCase {
     @Override
     public CheckEmailDto checkEmail(CheckEmailQuery checkEmailQuery) {
 
-        boolean sellerEmail = checkEmailPort.checkEmail(checkEmailQuery.getSellerEmail());
+        CheckEmailDto checkEmailDto = checkEmailPort.checkEmail(checkEmailQuery.getSellerEmail());
 
-        return CheckEmailDto.formCheckEmail(sellerEmail);
+        return checkEmailDto;
     }
 }
