@@ -1,6 +1,6 @@
 spring:
   application:
-    name: seller-service
+    name: vendor-service
   profiles:
     default: local
 

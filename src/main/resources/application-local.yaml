@@ -14,7 +14,7 @@ spring:
 
   # Replication 설정 -> hikari와 jdbc-url을 사용하면 된다!
   datasource:
-    url: jdbc:mysql://localhost:3306/gentle-dog-seller # 이부분을 바꿔야함
+    url: jdbc:mysql://localhost:3306/gentle-dog-vendor # 이부분을 바꿔야함
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
