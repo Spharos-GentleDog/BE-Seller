@@ -3,6 +3,8 @@ package egenius.Vendor.application.ports.in.query;
 import egenius.Vendor.adaptor.web.request.RequestSignUpVendor;
 import egenius.Vendor.domain.enums.BusinessTypes;
 import egenius.Vendor.domain.enums.VendorStatus;
+import egenius.Vendor.global.common.exception.BaseException;
+import egenius.Vendor.global.common.response.BaseResponseStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +41,7 @@ public class SignUpQuery {
     private LocalDate openedAt;
     private String vendorName;
     private String callCenterNumber;
-    private String phoneNumber;
+    private String vendorPhoneNumber;
     private VendorStatus vendorStatus;
 
 
@@ -51,8 +53,16 @@ public class SignUpQuery {
         // domain 에 정의된 값으로 변경 필요
         // String -> Integer 변환 ("0" -> 0)
         // Integer -> Enum의 name 값으로 변환 ( 0 -> enum -> 개인)
-        BusinessTypes businessTypeEnum = BusinessTypes.ofCodeValue(
-                Integer.valueOf(requestSignUpVendor.getBusinessType()));
+
+        Integer code;
+
+        try {
+            code = Integer.valueOf(requestSignUpVendor.getBusinessType());
+        } catch (NumberFormatException e){
+            throw new BaseException(BaseResponseStatus.BUSINESS_TYPE_ERROR);
+        }
+
+        BusinessTypes businessTypeEnum = BusinessTypes.ofCodeValue(code);
 
         log.info("b_type:{}",businessTypeEnum.getNameValue());
         VendorStatus VendorStatusEnum = VendorStatus.READY;
@@ -72,7 +82,7 @@ public class SignUpQuery {
                 .openedAt(requestSignUpVendor.getOpenedAt())
                 .vendorName(requestSignUpVendor.getVendorName())
                 .callCenterNumber(requestSignUpVendor.getCallCenterNumber())
-                .phoneNumber(requestSignUpVendor.getPhoneNumber())
+                .vendorPhoneNumber(requestSignUpVendor.getVendorPhoneNumber())
                 .vendorStatus(VendorStatusEnum)
                 .build();
     }

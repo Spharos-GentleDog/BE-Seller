@@ -2,6 +2,8 @@ package egenius.Vendor.global.common.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import static egenius.Vendor.global.common.response.BaseResponseStatus.SUCCESS;
 
@@ -23,5 +25,10 @@ public record BaseResponse<T>(HttpStatusCode httpStatus, Boolean isSuccess, Stri
     // 요청 실패한 경우
     public BaseResponse(BaseResponseStatus status) {
         this(status.getHttpStatusCode(), false, status.getMessage(), status.getCode(), null);
+    }
+
+    //요청에 실패한 경우 @Vaild annotantion error 판매자
+    public BaseResponse(MethodArgumentNotValidException e, String message) {
+        this(e.getStatusCode(),false,message,3000,null);
     }
 }

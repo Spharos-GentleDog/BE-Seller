@@ -1,5 +1,6 @@
 package egenius.Vendor.adaptor.infrastructure.mysql.entity;
 
+import egenius.Vendor.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 올바르지 않은 객체 생성을 막아준다
 @Entity
 @Table(name= "Vendors")
-public class VendorEntity {
+public class VendorEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +43,7 @@ public class VendorEntity {
     @Column(name = "homepage_url", length = 100)
     private String homepageUrl;
 
-    @Column(name = "business_type")
+    @Column(name = "business_type", nullable = false)
     private Integer businessType;
 
     @Column(name = "company_name", nullable = false, length = 20)
@@ -60,8 +61,8 @@ public class VendorEntity {
     @Column(name = "call_center_number", nullable = false, length = 20)
     private String callCenterNumber;
 
-    @Column(name = "phone_number", nullable = false, length = 20)
-    private String phoneNumber;
+    @Column(name = "vendor_phone_number", nullable = false, length = 20)
+    private String vendorPhoneNumber;
 
     @Column(name = "vendor_status", nullable = false, columnDefinition = "tinyint")
     private Integer vendorStatus;
@@ -73,7 +74,7 @@ public class VendorEntity {
     public static VendorEntity signUpVendor(String vendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
                                             String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                             Integer businessType, String companyName, String companyAddress, LocalDate openedAt, String vendorName,
-                                            String callCenterNumber, String phoneNumber, Integer vendorStatus) {
+                                            String callCenterNumber, String vendorPhoneNumber, Integer vendorStatus) {
         return VendorEntity.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
@@ -89,7 +90,7 @@ public class VendorEntity {
                 .openedAt(openedAt)
                 .vendorName(vendorName)
                 .callCenterNumber(callCenterNumber)
-                .phoneNumber(phoneNumber)
+                .vendorPhoneNumber(vendorPhoneNumber)
                 .vendorStatus(vendorStatus)
                 .build();
     }

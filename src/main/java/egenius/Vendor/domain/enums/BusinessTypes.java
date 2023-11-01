@@ -1,5 +1,7 @@
 package egenius.Vendor.domain.enums;
 
+import egenius.Vendor.global.common.exception.BaseException;
+import egenius.Vendor.global.common.response.BaseResponseStatus;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -25,7 +27,7 @@ public enum BusinessTypes {
         return Arrays.stream(BusinessTypes.values())
                 .filter(v->v.getCodeValue().equals(codeValue))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(()-> new BaseException(BaseResponseStatus.BUSINESS_TYPE_IS_NOT_FOUND));
     }
 
     // NameValue를 통해 해당 enum을 찾는 메소드
@@ -34,6 +36,6 @@ public enum BusinessTypes {
         return Arrays.stream(BusinessTypes.values())
                 .filter(v->v.getNameValue().equals(nameValue))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(()-> new BaseException(BaseResponseStatus.BUSINESS_TYPE_IS_NOT_FOUND));
     }
 }

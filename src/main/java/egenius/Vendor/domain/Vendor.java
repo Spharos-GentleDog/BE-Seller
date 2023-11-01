@@ -28,7 +28,7 @@ public class Vendor {
     private LocalDate openedAt;
     private String VendorName;
     private String callCenterNumber;
-    private String phoneNumber;
+    private String vendorPhoneNumber;
     private VendorStatus VendorStatus;
     private LocalDateTime deactivate;
 
@@ -36,7 +36,7 @@ public class Vendor {
     public static Vendor signUpVendor(String VendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
                                       String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                       BusinessTypes businessType, String companyName, String companyAddress, LocalDate openedAt,
-                                      String VendorName, String callCenterNumber, String phoneNumber, VendorStatus VendorStatus) {
+                                      String VendorName, String callCenterNumber, String vendorPhoneNumber, VendorStatus VendorStatus) {
         return Vendor.builder()
                 .VendorEmail(VendorEmail)
                 .businessNumber(businessNumber)
@@ -52,7 +52,7 @@ public class Vendor {
                 .openedAt(openedAt)
                 .VendorName(VendorName)
                 .callCenterNumber(callCenterNumber)
-                .phoneNumber(phoneNumber)
+                .vendorPhoneNumber(vendorPhoneNumber)
                 .VendorStatus(VendorStatus)
                 .build();
     }

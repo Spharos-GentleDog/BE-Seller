@@ -28,7 +28,7 @@ public class VendorController {
 
     //회원가입
     @PostMapping("/signup")
-    public BaseResponse<?> signUp(@RequestBody RequestSignUpVendor requestSignUpVendor){
+    public BaseResponse<?> signUp(@RequestBody @Valid RequestSignUpVendor requestSignUpVendor){
         log.info("회원가입 정보:{}", requestSignUpVendor);
         signUpUseCase.signUpVendor(SignUpQuery.toQuery(requestSignUpVendor));
         return new BaseResponse<>();
@@ -39,7 +39,8 @@ public class VendorController {
     public BaseResponse<?> CheckEmail(@RequestBody @Valid RequestCheckEmail requestCheckEmail){
         log.info("이메일 중복체크: {}",requestCheckEmail);
         // Dto에 저장 된 결과 값을 반환
-        return new BaseResponse<CheckEmailDto>(checkEmailUseCase.checkEmail(CheckEmailQuery.toQuery(requestCheckEmail)));
+        checkEmailUseCase.checkEmail(CheckEmailQuery.toQuery(requestCheckEmail));
+        return new BaseResponse<>();
     }
 
     /*
