@@ -1,5 +1,7 @@
 package egenius.Vendor.domain.enums;
 
+import egenius.Vendor.global.common.exception.BaseException;
+import egenius.Vendor.global.common.response.BaseResponseStatus;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -26,7 +28,7 @@ public enum VendorStatus {
         return Arrays.stream(VendorStatus.values())
                 .filter(v->v.getCodeValue().equals(codeValue))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(()-> new BaseException(BaseResponseStatus.VENDOR_STATUS_IS_NOT_FOUND));
     }
 
     public static VendorStatus ofNameValue(String nameValue){
@@ -34,7 +36,7 @@ public enum VendorStatus {
         return Arrays.stream(VendorStatus.values())
                 .filter(v->v.getNameValue().equals(nameValue))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(()-> new BaseException(BaseResponseStatus.VENDOR_STATUS_IS_NOT_FOUND));
     }
 
 }

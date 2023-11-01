@@ -52,7 +52,7 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort {
                 vendor.getOpenedAt(),
                 vendor.getVendorName(),
                 vendor.getCallCenterNumber(),
-                vendor.getPhoneNumber(),
+                vendor.getVendorPhoneNumber(),
                 VendorStatusCode
                 ));
 
@@ -73,7 +73,7 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort {
                 vendorEntity.getOpenedAt(),
                 vendorEntity.getVendorName(),
                 vendorEntity.getCallCenterNumber(),
-                vendorEntity.getPhoneNumber(),
+                vendorEntity.getVendorPhoneNumber(),
                 VendorStatusEnum.getNameValue()
                 );
     }

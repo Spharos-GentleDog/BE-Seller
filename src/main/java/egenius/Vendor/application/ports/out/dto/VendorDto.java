@@ -24,13 +24,13 @@ public class VendorDto {
     private LocalDate openedAt;
     private String vendorName;
     private String callCenterNumber;
-    private String phoneNumber;
+    private String vendorPhoneNumber;
     private String vendorStatus;
 
     public static VendorDto formVendors(String vendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
                                         String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                         String businessType, String companyName, String companyAddress, LocalDate openedAt,
-                                        String vendorName, String callCenterNumber, String phoneNumber, String vendorStatus){
+                                        String vendorName, String callCenterNumber, String vendorPhoneNumber, String vendorStatus){
         return VendorDto.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
@@ -46,7 +46,7 @@ public class VendorDto {
                 .openedAt(openedAt)
                 .vendorName(vendorName)
                 .callCenterNumber(callCenterNumber)
-                .phoneNumber(phoneNumber)
+                .vendorPhoneNumber(vendorPhoneNumber)
                 .vendorStatus(vendorStatus)
                 .build();
 

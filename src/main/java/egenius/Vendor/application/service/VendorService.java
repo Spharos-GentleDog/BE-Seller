@@ -9,12 +9,16 @@ import egenius.Vendor.application.ports.out.dto.VendorDto;
 import egenius.Vendor.application.ports.out.port.CheckEmailPort;
 import egenius.Vendor.application.ports.out.port.VendorPort;
 import egenius.Vendor.domain.Vendor;
+import egenius.Vendor.global.common.exception.BaseException;
+import egenius.Vendor.global.common.response.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class VendorService implements SignUpUseCase, CheckEmailUseCase {
 
     private final VendorPort vendorPort;
@@ -49,7 +53,7 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase {
                 signUpQuery.getOpenedAt(),
                 signUpQuery.getVendorName(),
                 signUpQuery.getCallCenterNumber(),
-                signUpQuery.getPhoneNumber(),
+                signUpQuery.getVendorPhoneNumber(),
                 signUpQuery.getVendorStatus()
         ));
 
@@ -61,7 +65,11 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase {
     public CheckEmailDto checkEmail(CheckEmailQuery checkEmailQuery) {
 
         CheckEmailDto checkEmailDto = checkEmailPort.checkEmail(checkEmailQuery.getVendorEmail());
-
+        log.info("이메일 인증 정보 {}",checkEmailDto.isVendorEmail());
+        //이미 사용 중인 이메일인 경우 error 반환
+        if(checkEmailDto.isVendorEmail()){
+            throw new BaseException(BaseResponseStatus.EMAIL_NOT_FOUND);
+        }
         return checkEmailDto;
     }
 }
