@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface VendorRepository extends JpaRepository<VendorEntity, Long> {
     //이메일 중복 체크
     Optional<VendorEntity> findByVendorEmail(String vendorEmail);
+    Optional<VendorEntity> findByVendorEmailAndVendorPassword(String vendorEmail, String vendorPassword);
 
 }

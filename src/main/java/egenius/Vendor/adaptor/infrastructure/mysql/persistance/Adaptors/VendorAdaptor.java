@@ -2,6 +2,8 @@ package egenius.Vendor.adaptor.infrastructure.mysql.persistance.Adaptors;
 
 import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorEntity;
 import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
+import egenius.Vendor.application.ports.out.dto.SignInDto;
+import egenius.Vendor.application.ports.out.port.SignInPort;
 import egenius.Vendor.domain.enums.BusinessTypes;
 import egenius.Vendor.domain.enums.VendorStatus;
 import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.BusinessTypeConverter;
@@ -21,7 +23,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorAdaptor implements VendorPort, CheckEmailPort {
+public class VendorAdaptor implements VendorPort, CheckEmailPort, SignInPort {
 
 
     // 엔터티의 상태 변화를 구현
@@ -92,4 +94,22 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort {
         return CheckEmailDto.formCheckEmail(false);
     }
 
+    @Override
+    public SignInDto signIn(Vendor vendor) {
+
+        VendorEntity vendorEntity = vendorRepository.findByVendorEmail(vendor.getVendorEmail());
+        if(vendorEntity.ifPresent()){
+            log.info("로그인 성공");
+            SignInDto signInDto = SignInDto.formfindVendor(
+                    vendorEntity.getVendorEmail(),
+                    vendorEntity.getBrandName(),
+                    vendorEntity.getBrandLogoImageUrl(),
+                    true);
+
+            return signInDto;
+        }
+
+
+        return Optional.empty();
+    }
 }

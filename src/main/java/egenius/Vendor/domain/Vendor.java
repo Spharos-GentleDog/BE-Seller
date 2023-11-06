@@ -14,7 +14,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Vendor {
 
-    private String VendorEmail;
+    // 도메인 로직이 위치하는 곳
+    // 도메인과 관련된 데이터 와 규칙이 들어 있어야 한다
+    private String vendorEmail;
     private String businessNumber;
     private String vendorPassword;
     private String mailOrderNumber;
@@ -33,12 +35,12 @@ public class Vendor {
     private LocalDateTime deactivate;
 
 
-    public static Vendor signUpVendor(String VendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
+    public static Vendor signUpVendor(String vendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
                                       String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                       BusinessTypes businessType, String companyName, String companyAddress, LocalDate openedAt,
                                       String VendorName, String callCenterNumber, String vendorPhoneNumber, VendorStatus VendorStatus) {
         return Vendor.builder()
-                .VendorEmail(VendorEmail)
+                .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
                 .vendorPassword(vendorPassword)
                 .mailOrderNumber(mailOrderNumber)
@@ -54,6 +56,13 @@ public class Vendor {
                 .callCenterNumber(callCenterNumber)
                 .vendorPhoneNumber(vendorPhoneNumber)
                 .VendorStatus(VendorStatus)
+                .build();
+    }
+
+    public static Vendor signInVendor(String vendorEmail, String vendorPassword) {
+        return Vendor.builder()
+                .vendorEmail(vendorEmail)
+                .vendorPassword(vendorPassword)
                 .build();
     }
 
