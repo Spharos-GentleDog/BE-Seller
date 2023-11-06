@@ -1,8 +1,8 @@
 package egenius.Vendor.application.ports.out.port;
 
-import egenius.Vendor.domain.VendorAccount;
+import egenius.Vendor.domain.VendorBanckAccount;
 
 public interface VendorAccountPort {
 
-    VendorAccount createVendorAccount(VendorAccount VendorAccount);
+    VendorBanckAccount createVendorAccount(VendorBanckAccount VendorAccount);
 }

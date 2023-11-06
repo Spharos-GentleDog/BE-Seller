@@ -26,6 +26,8 @@ public enum BaseResponseStatus {
     BUSINESS_TYPE_IS_NOT_FOUND(HttpStatus.NOT_FOUND, false, 3002,"존재하지 않는 사업자 유형 입니다"),
     BUSINESS_TYPE_ERROR(HttpStatus.NOT_FOUND,false,3003,"사업자 유형을 올바르게 입력했는지 확인 하세요"),
     VENDOR_STATUS_IS_NOT_FOUND(HttpStatus.NOT_FOUND, false, 3004,"존재하지 않는 상태 입니다"),
+    NO_EXIST_VENDOR(HttpStatus.NOT_FOUND, false, 3005,"존재하지 않는 판매자 입니다"),
+    WITHDRAWAL_VENDOR(HttpStatus.NOT_FOUND, false, 3006,"탈퇴한 판매자 입니다"),
 
     ;
     private final HttpStatusCode httpStatusCode;

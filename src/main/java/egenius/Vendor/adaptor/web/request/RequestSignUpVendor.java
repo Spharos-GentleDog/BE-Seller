@@ -31,13 +31,15 @@ public class RequestSignUpVendor {
     @NotBlank(message = "업체명은 필수 입니다")
     private String companyName;
     private String companyAddress;
-//    @NotBlank(message = "개업일자는 필수 입니다")
+    @NotBlank(message = "개업일자는 필수 입니다")
     private LocalDate openedAt;
     @NotBlank(message = "대표자명은 필수 입니다")
     private String vendorName;
     @NotBlank(message = "대표번호는 필수 입니다")
     private String callCenterNumber;
+    @NotBlank(message = "담당자 이름은 필수 입니다")
+    private String managerName;
     @NotBlank(message = "연락번호는 필수 입니다")
-    private String vendorPhoneNumber;
+    private String managerPhoneNumber;
 
 }

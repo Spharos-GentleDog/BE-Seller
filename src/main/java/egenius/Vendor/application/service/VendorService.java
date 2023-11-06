@@ -7,18 +7,21 @@ import egenius.Vendor.application.ports.in.query.CheckEmailQuery;
 import egenius.Vendor.application.ports.in.query.SignInQuery;
 import egenius.Vendor.application.ports.in.query.SignUpQuery;
 import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
+import egenius.Vendor.application.ports.out.dto.FindVendorDto;
 import egenius.Vendor.application.ports.out.dto.SignInDto;
 import egenius.Vendor.application.ports.out.dto.VendorDto;
 import egenius.Vendor.application.ports.out.port.CheckEmailPort;
-import egenius.Vendor.application.ports.out.port.SignInPort;
+import egenius.Vendor.application.ports.out.port.FindVendorPort;
 import egenius.Vendor.application.ports.out.port.VendorPort;
 import egenius.Vendor.domain.Vendor;
 import egenius.Vendor.global.common.exception.BaseException;
 import egenius.Vendor.global.common.response.BaseResponseStatus;
+import egenius.Vendor.global.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,11 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
 
     private final VendorPort vendorPort;
     private final CheckEmailPort checkEmailPort;
+    private final FindVendorPort findVendorPort;
+
+    //JWT 발급
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 빈약한 도메인 모델의 비지니스 로직 구현 => 유스케이스 단에서 비지니스 로직 처리
     // Usecase 구현 : 서비스 로직 수행 후 Dto로 데이터 반환
@@ -59,7 +67,8 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
                 signUpQuery.getOpenedAt(),
                 signUpQuery.getVendorName(),
                 signUpQuery.getCallCenterNumber(),
-                signUpQuery.getVendorPhoneNumber(),
+                signUpQuery.getManagerName(),
+                signUpQuery.getManagerPhoneNumber(),
                 signUpQuery.getVendorStatus()
         ));
 
@@ -82,23 +91,32 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
     //판매자 로그인
     @Override
     public SignInDto signIn(SignInQuery signInQuery) {
+        // 비밀번호 확인
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        signInQuery.getVendorEmail(),
+                        signInQuery.getVendorPassword()
+                )
+        );
 
-        // 판매자 회원 정보 조회 (이메일, 패스워드)
-        SignInDto signInDto = SignInPort.signIn(Vendor.signInVendor(
-                signInQuery.getVendorEmail(),
-                signInQuery.getVendorPassword()
-        ));
-        //회원 정보가 있을 경우 로그인 성공
-        if (signInDto.isVendor()){
-            // token 발급
-            // todo : token 발급 로직 구현
+        // email로 판매자 조회
+        Vendor vendor = findVendorPort.findVendor(signInQuery.getVendorEmail());
 
-            return signInDto;
-        }else {
-            //회원 정보가 없을 경우 로그인 실패
-            throw new BaseException(BaseResponseStatus.SIGNIN_FAIL);
+        // 탈퇴한 판매자면 로그인 불가
+        if(vendor.getDeactivate() == null){
+            throw new BaseException(BaseResponseStatus.WITHDRAWAL_VENDOR);
         }
 
 
+        // JWT 토큰 발급
+        String jwt = jwtTokenProvider.generateToken(vendor);
+        //refresh token 발급
+        String refreshToken = jwtTokenProvider.generateRefreshToken(vendor);
+
+
+        return SignInDto.formSignIn(jwt, refreshToken, vendor.getVendorEmail(), vendor.getBrandName(),
+                vendor.getBrandLogoImageUrl());
     }
+
+
 }

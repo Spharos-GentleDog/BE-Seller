@@ -41,7 +41,8 @@ public class SignUpQuery {
     private LocalDate openedAt;
     private String vendorName;
     private String callCenterNumber;
-    private String vendorPhoneNumber;
+    private String managerName;
+    private String managerPhoneNumber;
     private VendorStatus vendorStatus;
 
 
@@ -82,7 +83,8 @@ public class SignUpQuery {
                 .openedAt(requestSignUpVendor.getOpenedAt())
                 .vendorName(requestSignUpVendor.getVendorName())
                 .callCenterNumber(requestSignUpVendor.getCallCenterNumber())
-                .vendorPhoneNumber(requestSignUpVendor.getVendorPhoneNumber())
+                .managerName(requestSignUpVendor.getManagerName())
+                .managerPhoneNumber(requestSignUpVendor.getManagerPhoneNumber())
                 .vendorStatus(VendorStatusEnum)
                 .build();
     }

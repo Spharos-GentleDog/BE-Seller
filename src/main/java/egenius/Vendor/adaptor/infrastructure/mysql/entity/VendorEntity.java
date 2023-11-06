@@ -3,9 +3,14 @@ package egenius.Vendor.adaptor.infrastructure.mysql.entity;
 import egenius.Vendor.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Builder
@@ -61,8 +66,11 @@ public class VendorEntity extends BaseTimeEntity {
     @Column(name = "call_center_number", nullable = false, length = 20)
     private String callCenterNumber;
 
-    @Column(name = "vendor_phone_number", nullable = false, length = 20)
-    private String vendorPhoneNumber;
+    @Column(name = "manager_name", nullable = false, length = 10)
+    private String managerName;
+
+    @Column(name = "manager_phone_number", nullable = false, length = 20)
+    private String managerPhoneNumber;
 
     @Column(name = "vendor_status", nullable = false, columnDefinition = "tinyint")
     private Integer vendorStatus;
@@ -74,7 +82,7 @@ public class VendorEntity extends BaseTimeEntity {
     public static VendorEntity signUpVendor(String vendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
                                             String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                             Integer businessType, String companyName, String companyAddress, LocalDate openedAt, String vendorName,
-                                            String callCenterNumber, String vendorPhoneNumber, Integer vendorStatus) {
+                                            String callCenterNumber,String managerName, String managerPhoneNumber, Integer vendorStatus) {
         return VendorEntity.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
@@ -90,9 +98,19 @@ public class VendorEntity extends BaseTimeEntity {
                 .openedAt(openedAt)
                 .vendorName(vendorName)
                 .callCenterNumber(callCenterNumber)
-                .vendorPhoneNumber(vendorPhoneNumber)
+                .managerName(managerName)
+                .managerPhoneNumber(managerPhoneNumber)
                 .vendorStatus(vendorStatus)
                 .build();
     }
+
+    public static VendorEntity signInVendor(String vendorEmail) {
+        return VendorEntity.builder()
+                .vendorEmail(vendorEmail)
+                .build();
+    }
+
+
+
 
 }

@@ -2,8 +2,8 @@ package egenius.Vendor.adaptor.infrastructure.mysql.persistance.Adaptors;
 
 import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorEntity;
 import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
-import egenius.Vendor.application.ports.out.dto.SignInDto;
-import egenius.Vendor.application.ports.out.port.SignInPort;
+import egenius.Vendor.application.ports.out.dto.FindVendorDto;
+import egenius.Vendor.application.ports.out.port.FindVendorPort;
 import egenius.Vendor.domain.enums.BusinessTypes;
 import egenius.Vendor.domain.enums.VendorStatus;
 import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.BusinessTypeConverter;
@@ -13,6 +13,8 @@ import egenius.Vendor.application.ports.out.dto.VendorDto;
 import egenius.Vendor.application.ports.out.port.CheckEmailPort;
 import egenius.Vendor.application.ports.out.port.VendorPort;
 import egenius.Vendor.domain.Vendor;
+import egenius.Vendor.global.common.exception.BaseException;
+import egenius.Vendor.global.common.response.BaseResponseStatus;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorAdaptor implements VendorPort, CheckEmailPort, SignInPort {
+public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort {
 
 
     // 엔터티의 상태 변화를 구현
@@ -54,7 +56,8 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, SignInPort {
                 vendor.getOpenedAt(),
                 vendor.getVendorName(),
                 vendor.getCallCenterNumber(),
-                vendor.getVendorPhoneNumber(),
+                vendor.getManagerName(),
+                vendor.getManagerPhoneNumber(),
                 VendorStatusCode
                 ));
 
@@ -75,7 +78,8 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, SignInPort {
                 vendorEntity.getOpenedAt(),
                 vendorEntity.getVendorName(),
                 vendorEntity.getCallCenterNumber(),
-                vendorEntity.getVendorPhoneNumber(),
+                vendorEntity.getManagerName(),
+                vendorEntity.getManagerPhoneNumber(),
                 VendorStatusEnum.getNameValue()
                 );
     }
@@ -95,21 +99,18 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, SignInPort {
     }
 
     @Override
-    public SignInDto signIn(Vendor vendor) {
+    public Vendor findVendor(String vendorEmail) {
 
-        VendorEntity vendorEntity = vendorRepository.findByVendorEmail(vendor.getVendorEmail());
-        if(vendorEntity.ifPresent()){
-            log.info("로그인 성공");
-            SignInDto signInDto = SignInDto.formfindVendor(
-                    vendorEntity.getVendorEmail(),
-                    vendorEntity.getBrandName(),
-                    vendorEntity.getBrandLogoImageUrl(),
-                    true);
+        VendorEntity vendorEntity = vendorRepository.findByVendorEmail(vendorEmail)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_VENDOR));
 
-            return signInDto;
-        }
+        return Vendor.signInVendor(
+                vendorEntity.getVendorEmail(),
+                vendorEntity.getVendorPassword(),
+                vendorEntity.getVendorName(),
+                vendorEntity.getBrandLogoImageUrl(),
+                vendorEntity.getDeactivate()
+        );
 
-
-        return Optional.empty();
     }
 }
