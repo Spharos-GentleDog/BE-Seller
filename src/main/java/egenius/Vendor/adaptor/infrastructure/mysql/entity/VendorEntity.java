@@ -18,7 +18,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 올바르지 않은 객체 생성을 막아준다
 @Entity
 @Table(name= "Vendors")
-public class VendorEntity extends BaseTimeEntity {
+public class VendorEntity extends BaseTimeEntity implements UserDetails {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,7 @@ public class VendorEntity extends BaseTimeEntity {
     @Column(name = "business_number", nullable = false, length = 20)
     private String businessNumber;
 
-    @Column(name = "vendor_password", nullable = false, length = 20)
+    @Column(name = "vendor_password", nullable = false, length = 100)
     private String vendorPassword;
 
     @Column(name = "mail_order_number", nullable = false, length = 20)
@@ -66,7 +67,7 @@ public class VendorEntity extends BaseTimeEntity {
     @Column(name = "call_center_number", nullable = false, length = 20)
     private String callCenterNumber;
 
-    @Column(name = "manager_name", nullable = false, length = 10)
+    @Column(name = "manager_name", nullable = false, length = 20)
     private String managerName;
 
     @Column(name = "manager_phone_number", nullable = false, length = 20)
@@ -79,10 +80,12 @@ public class VendorEntity extends BaseTimeEntity {
     private LocalDateTime deactivate;
 
 
-    public static VendorEntity signUpVendor(String vendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
-                                            String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
-                                            Integer businessType, String companyName, String companyAddress, LocalDate openedAt, String vendorName,
-                                            String callCenterNumber,String managerName, String managerPhoneNumber, Integer vendorStatus) {
+    public static VendorEntity signUpVendor(String vendorEmail, String businessNumber, String vendorPassword,
+                                            String mailOrderNumber, String brandName, String brandLogoImageUrl,
+                                            String brandContent, String homepageUrl, Integer businessType,
+                                            String companyName, String companyAddress, LocalDate openedAt,
+                                            String vendorName, String callCenterNumber,String managerName,
+                                            String managerPhoneNumber, Integer vendorStatus) {
         return VendorEntity.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
@@ -111,6 +114,46 @@ public class VendorEntity extends BaseTimeEntity {
     }
 
 
+    //JWT 관련 메서드
+    // UserDetails 인터페이스 구현
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // 권한 반환
+        return null; // role 추가
+    }
 
+    @Override
+    public String getPassword() {
+        return null;
+    }
 
+    @Override
+    public String getUsername() {
+        // 유저네임 반환
+        return brandName; // 이름으로 사용 하는 데이터 (Vendor : brandName)
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // 계정 만료 여부
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // 계정 잠금 여부
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // 계정 패스워드 만료 여부
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // 계정 활성화 여부
+        return true;
+    }
 }

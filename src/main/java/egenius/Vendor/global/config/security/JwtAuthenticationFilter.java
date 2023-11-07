@@ -32,6 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             @NonNull
             FilterChain filterChain
+
     ) throws ServletException, IOException {
         // HTTP 요청 헤더에서 "Authorization" 값을 가져옵니다.
         final String authHeader = request.getHeader("Authorization");
@@ -41,17 +42,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 헤더가 null이거나, "Bearer"로 시작하지 않는다면 토큰 인증을 진행하지 않음
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            System.out.println("여기서 에러떴어요!");
             return;
         }
         jwt = authHeader.substring(7); // "Bearer " 제외
         // JWT 토큰에서 사용자 email을 가져옵니다.
-        userEmail = jwtTokenProvider.ExtractVendorEmail(jwt);
+        userEmail = jwtTokenProvider.getUserEmail(jwt);
         // 유효성 검사
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // userEmail 기반으로 사용자 정보를 가져옵니다.
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            System.out.println("여기서 에러떴어요!2");
             // 토큰이 유효한 경우 인증 정보를 생성하고 Security Context에 설정합니다.
             if (jwtTokenProvider.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

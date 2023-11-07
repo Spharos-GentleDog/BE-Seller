@@ -15,6 +15,7 @@ import egenius.Vendor.application.ports.out.port.VendorPort;
 import egenius.Vendor.domain.Vendor;
 import egenius.Vendor.global.common.exception.BaseException;
 import egenius.Vendor.global.common.response.BaseResponseStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,11 +41,12 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
         //DB에 데이터 저장하기 위한 변환 작업
         Integer businessTypeCode = businessTypeConverter.convertToDatabaseColumn(vendor.getBusinessType());
         Integer VendorStatusCode = vendorStatusConvertor.convertToDatabaseColumn(vendor.getVendorStatus());
+        String password = new BCryptPasswordEncoder().encode(vendor.getVendorPassword());
 
         VendorEntity vendorEntity = vendorRepository.save(VendorEntity.signUpVendor(
                 vendor.getVendorEmail(),
                 vendor.getBusinessNumber(),
-                vendor.getVendorPassword(),
+                password,
                 vendor.getMailOrderNumber(),
                 vendor.getBrandName(),
                 vendor.getBrandLogoImageUrl(),

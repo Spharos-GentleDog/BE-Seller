@@ -83,18 +83,18 @@ public class Vendor implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 권한 반환
-        return List.of(new SimpleGrantedAuthority("ROLE_VENDOR")); // role 추가
-    }
-    @Override
-    public String getUsername() {
-        // 유저네임 반환
-        return brandName; // 이름으로 사용 하는 데이터 (Vendor : brandName)
+        return null; // role 추가
     }
 
     @Override
     public String getPassword() {
-        // 패스워드 반환
         return null;
+    }
+
+    @Override
+    public String getUsername() {
+        // 유저네임 반환
+        return brandName; // 이름으로 사용 하는 데이터 (Vendor : brandName)
     }
 
     @Override
