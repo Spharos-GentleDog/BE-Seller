@@ -1,5 +1,6 @@
 package egenius.Vendor.application.ports.out.port;
 
+import egenius.Vendor.application.ports.out.dto.FindVendorDto;
 import egenius.Vendor.application.ports.out.dto.VendorDto;
 import egenius.Vendor.domain.Vendor;
 

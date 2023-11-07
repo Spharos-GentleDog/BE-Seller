@@ -29,7 +29,7 @@ public class SignUpQuery {
     // 외부에서 내부로 들어가는 데이터
     private String vendorEmail;
     private String businessNumber;
-    private String vendorPassword;
+    private String password;
     private String mailOrderNumber;
     private String brandName;
     private String brandLogoImageUrl;
@@ -41,7 +41,8 @@ public class SignUpQuery {
     private LocalDate openedAt;
     private String vendorName;
     private String callCenterNumber;
-    private String vendorPhoneNumber;
+    private String managerName;
+    private String managerPhoneNumber;
     private VendorStatus vendorStatus;
 
 
@@ -66,11 +67,11 @@ public class SignUpQuery {
 
         log.info("b_type:{}",businessTypeEnum.getNameValue());
         VendorStatus VendorStatusEnum = VendorStatus.READY;
-
+//        System.out.println(requestSignUpVendor);
         return SignUpQuery.builder()
                 .vendorEmail(requestSignUpVendor.getVendorEmail())
                 .businessNumber(requestSignUpVendor.getBusinessNumber())
-                .vendorPassword(requestSignUpVendor.getVendorPassword())
+                .password(requestSignUpVendor.getPassword())
                 .mailOrderNumber(requestSignUpVendor.getMailOrderNumber())
                 .brandName(requestSignUpVendor.getBrandName())
                 .brandLogoImageUrl(requestSignUpVendor.getBrandLogoImageUrl())
@@ -82,7 +83,8 @@ public class SignUpQuery {
                 .openedAt(requestSignUpVendor.getOpenedAt())
                 .vendorName(requestSignUpVendor.getVendorName())
                 .callCenterNumber(requestSignUpVendor.getCallCenterNumber())
-                .vendorPhoneNumber(requestSignUpVendor.getVendorPhoneNumber())
+                .managerName(requestSignUpVendor.getManagerName())
+                .managerPhoneNumber(requestSignUpVendor.getManagerPhoneNumber())
                 .vendorStatus(VendorStatusEnum)
                 .build();
     }

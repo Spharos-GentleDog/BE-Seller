@@ -9,7 +9,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-      format_sql: true
     show-sql: true
 
   # Replication 설정 -> hikari와 jdbc-url을 사용하면 된다!
@@ -19,15 +18,33 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+  # Redis 설정
+  data:
+    redis:
+      host: localhost
+      port: 6379
+    web:
+      pageable:
+        one-indexed-parameters: true
+JWT:
+  secret-key: fbcb542e08e7feed1c9ebc3740ee092f43304e0b8a666d63bc36fbe785ad447a
+  #  expiration-time: 14400000
+  header: Authorization
+  prefix: Bearer
+  token:
+    access-expiration-time: 3600000         # 1시간 3600000 # 3분 180000
+    refresh-expiration-time: 2592000000     # 30 일 2592000000 # 1시간 3600000 # 3분 180000
 
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 
 #  datasource:

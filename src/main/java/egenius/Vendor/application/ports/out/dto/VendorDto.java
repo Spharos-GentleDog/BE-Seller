@@ -12,7 +12,7 @@ public class VendorDto {
     // 비지니스 로직 상 결과 값으로 받을 정보
     private String vendorEmail;
     private String businessNumber;
-    private String vendorPassword;
+    private String password;
     private String mailOrderNumber;
     private String brandName;
     private String brandLogoImageUrl;
@@ -24,17 +24,18 @@ public class VendorDto {
     private LocalDate openedAt;
     private String vendorName;
     private String callCenterNumber;
-    private String vendorPhoneNumber;
+    private String managerName;
+    private String managerPhoneNumber;
     private String vendorStatus;
 
-    public static VendorDto formVendors(String vendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
+    public static VendorDto formVendors(String vendorEmail, String businessNumber, String password, String mailOrderNumber,
                                         String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                         String businessType, String companyName, String companyAddress, LocalDate openedAt,
-                                        String vendorName, String callCenterNumber, String vendorPhoneNumber, String vendorStatus){
+                                        String vendorName, String callCenterNumber, String managerName, String managerPhoneNumber, String vendorStatus){
         return VendorDto.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
-                .vendorPassword(vendorPassword)
+                .password(password)
                 .mailOrderNumber(mailOrderNumber)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
@@ -46,7 +47,8 @@ public class VendorDto {
                 .openedAt(openedAt)
                 .vendorName(vendorName)
                 .callCenterNumber(callCenterNumber)
-                .vendorPhoneNumber(vendorPhoneNumber)
+                .managerName(managerName)
+                .managerPhoneNumber(managerPhoneNumber)
                 .vendorStatus(vendorStatus)
                 .build();
 
