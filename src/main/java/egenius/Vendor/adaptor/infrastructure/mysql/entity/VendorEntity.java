@@ -31,8 +31,8 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
     @Column(name = "business_number", nullable = false, length = 20)
     private String businessNumber;
 
-    @Column(name = "vendor_password", nullable = false, length = 100)
-    private String vendorPassword;
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
 
     @Column(name = "mail_order_number", nullable = false, length = 20)
     private String mailOrderNumber;
@@ -80,7 +80,7 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
     private LocalDateTime deactivate;
 
 
-    public static VendorEntity signUpVendor(String vendorEmail, String businessNumber, String vendorPassword,
+    public static VendorEntity signUpVendor(String vendorEmail, String businessNumber, String password,
                                             String mailOrderNumber, String brandName, String brandLogoImageUrl,
                                             String brandContent, String homepageUrl, Integer businessType,
                                             String companyName, String companyAddress, LocalDate openedAt,
@@ -89,7 +89,7 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
         return VendorEntity.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
-                .vendorPassword(vendorPassword)
+                .password(password)
                 .mailOrderNumber(mailOrderNumber)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)

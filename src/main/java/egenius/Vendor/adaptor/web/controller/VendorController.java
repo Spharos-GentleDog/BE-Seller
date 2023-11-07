@@ -34,6 +34,7 @@ public class VendorController {
     @PostMapping("/signup")
     public BaseResponse<?> signUp(@RequestBody @Valid RequestSignUpVendor requestSignUpVendor){
         log.info("회원가입 정보:{}", requestSignUpVendor);
+        System.out.print(requestSignUpVendor.getVendorEmail());
         signUpUseCase.signUpVendor(SignUpQuery.toQuery(requestSignUpVendor));
         return new BaseResponse<>();
     }
@@ -50,7 +51,7 @@ public class VendorController {
     //로그인
     @PostMapping("/signin")
     public BaseResponse<?> SignIn(@RequestBody @Valid RequestSignInVendor requestSignInVendor){
-        log.info("로그인 정보: {}", requestSignInVendor);
+        log.info("로그인 정보: {} {}", requestSignInVendor.getPassword(),requestSignInVendor.getVendorEmail());
         return new BaseResponse<>(signInUseCase.signIn(SignInQuery.toQuery(requestSignInVendor)));
     }
 

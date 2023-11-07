@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,7 +56,7 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
         VendorDto vendorDto = vendorPort.signUpVendor(Vendor.signUpVendor(
                 signUpQuery.getVendorEmail(),
                 signUpQuery.getBusinessNumber(),
-                signUpQuery.getVendorPassword(),
+                signUpQuery.getPassword(),
                 signUpQuery.getMailOrderNumber(),
                 signUpQuery.getBrandName(),
                 signUpQuery.getBrandLogoImageUrl(),
@@ -91,28 +92,32 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
     //판매자 로그인
     @Override
     public SignInDto signIn(SignInQuery signInQuery) {
-        // 비밀번호 확인
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        signInQuery.getVendorEmail(),
-                        signInQuery.getVendorPassword()
-                )
-        );
 
         // email로 판매자 조회
         Vendor vendor = findVendorPort.findVendor(signInQuery.getVendorEmail());
 
         // 탈퇴한 판매자면 로그인 불가
-        if(vendor.getDeactivate() == null){
+        if(vendor.getDeactivate() != null){
             throw new BaseException(BaseResponseStatus.WITHDRAWAL_VENDOR);
         }
 
-
+        log.info("{} {}", signInQuery.getVendorEmail(), signInQuery.getPassword());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        log.info("vender {} ", vendor);
+        // 비밀번호 확인
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        signInQuery.getVendorEmail(),
+                        signInQuery.getPassword()
+                )
+        );
         // JWT 토큰 발급
         String jwt = jwtTokenProvider.generateToken(vendor);
         //refresh token 발급
         String refreshToken = jwtTokenProvider.generateRefreshToken(vendor);
 
+        System.out.print("jwt : " + jwt);
+        System.out.print("jwt : " + jwt);
 
         return SignInDto.formSignIn(jwt, refreshToken, vendor.getVendorEmail(), vendor.getBrandName(),
                 vendor.getBrandLogoImageUrl());

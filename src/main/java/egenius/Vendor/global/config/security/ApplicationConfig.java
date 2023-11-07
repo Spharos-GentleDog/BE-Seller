@@ -2,6 +2,7 @@ package egenius.Vendor.global.config.security;
 
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,8 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class ApplicationConfig {
-    private final VendorRepository userRepository;
+    private final VendorRepository vendorRepository;
 
     /**
      * Security 동작에 필요한 인증 제공자, 인증 관리자, 패스워드 인코더를 설정 및 등록한다
@@ -25,8 +27,8 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return userEmail -> (UserDetails) userRepository.findByVendorEmail(userEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found : {}" + userEmail));
+        return vendorEmail ->  vendorRepository.findByVendorEmail(vendorEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found : {}" + vendorEmail));
     }
 
     // 인증 제공자 : 인증을 처리하는데 사용하는 authenticationProvider를 생성한다.
@@ -49,6 +51,5 @@ public class ApplicationConfig {
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
 }

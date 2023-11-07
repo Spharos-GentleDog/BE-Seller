@@ -29,7 +29,7 @@ public class SignUpQuery {
     // 외부에서 내부로 들어가는 데이터
     private String vendorEmail;
     private String businessNumber;
-    private String vendorPassword;
+    private String password;
     private String mailOrderNumber;
     private String brandName;
     private String brandLogoImageUrl;
@@ -67,11 +67,11 @@ public class SignUpQuery {
 
         log.info("b_type:{}",businessTypeEnum.getNameValue());
         VendorStatus VendorStatusEnum = VendorStatus.READY;
-
+//        System.out.println(requestSignUpVendor);
         return SignUpQuery.builder()
                 .vendorEmail(requestSignUpVendor.getVendorEmail())
                 .businessNumber(requestSignUpVendor.getBusinessNumber())
-                .vendorPassword(requestSignUpVendor.getVendorPassword())
+                .password(requestSignUpVendor.getPassword())
                 .mailOrderNumber(requestSignUpVendor.getMailOrderNumber())
                 .brandName(requestSignUpVendor.getBrandName())
                 .brandLogoImageUrl(requestSignUpVendor.getBrandLogoImageUrl())

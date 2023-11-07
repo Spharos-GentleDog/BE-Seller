@@ -23,7 +23,7 @@ public class Vendor implements UserDetails {
     // 도메인과 관련된 데이터 와 규칙이 들어 있어야 한다
     private String vendorEmail;
     private String businessNumber;
-    private String vendorPassword;
+    private String password;
     private String mailOrderNumber;
     private String brandName;
     private String brandLogoImageUrl;
@@ -41,14 +41,14 @@ public class Vendor implements UserDetails {
     private LocalDateTime deactivate;
 
 
-    public static Vendor signUpVendor(String vendorEmail, String businessNumber, String vendorPassword, String mailOrderNumber,
+    public static Vendor signUpVendor(String vendorEmail, String businessNumber, String password, String mailOrderNumber,
                                       String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
                                       BusinessTypes businessType, String companyName, String companyAddress, LocalDate openedAt,
                                       String VendorName, String callCenterNumber,String managerName, String managerPhoneNumber, VendorStatus VendorStatus) {
         return Vendor.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
-                .vendorPassword(vendorPassword)
+                .password(password)
                 .mailOrderNumber(mailOrderNumber)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
@@ -66,11 +66,11 @@ public class Vendor implements UserDetails {
                 .build();
     }
 
-    public static Vendor signInVendor(String vendorEmail, String vendorPassword, String brandName,
+    public static Vendor signInVendor(String vendorEmail, String password, String brandName,
                                       String brandLogoImageUrl, LocalDateTime deactivate) {
         return Vendor.builder()
                 .vendorEmail(vendorEmail)
-                .vendorPassword(vendorPassword)
+                .password(password)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
                 .deactivate(deactivate)
@@ -88,13 +88,13 @@ public class Vendor implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
         // 유저네임 반환
-        return brandName; // 이름으로 사용 하는 데이터 (Vendor : brandName)
+        return vendorEmail; // 이름으로 사용 하는 데이터 (Vendor : brandName)
     }
 
     @Override

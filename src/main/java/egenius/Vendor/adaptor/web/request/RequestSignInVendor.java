@@ -6,5 +6,5 @@ import lombok.Getter;
 public class RequestSignInVendor {
 
     private String vendorEmail;
-    private String vendorPassword;
+    private String password;
 }

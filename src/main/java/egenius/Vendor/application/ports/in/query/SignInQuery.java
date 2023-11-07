@@ -8,12 +8,12 @@ import lombok.Getter;
 @Builder
 public class SignInQuery {
     private String vendorEmail;
-    private String vendorPassword;
+    private String password;
 
     public static SignInQuery toQuery(RequestSignInVendor requestSignInVendor){
         return SignInQuery.builder()
                 .vendorEmail(requestSignInVendor.getVendorEmail())
-                .vendorPassword(requestSignInVendor.getVendorPassword())
+                .password(requestSignInVendor.getPassword())
                 .build();
     }
 }

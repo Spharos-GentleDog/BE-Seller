@@ -10,16 +10,16 @@ import java.time.LocalDateTime;
 public class FindVendorDto {
 
     private String vendorEmail;
-    private String vendorPassword;
+    private String password;
     private String brandName; // 브랜드 이름
     private String brandLogoImageUrl; // 브랜드 로고 이미지 url
     private LocalDateTime deactivate; // 탈퇴 날짜
 
-    public static FindVendorDto formFindVendor(String vendorEmail, String vendorPassword,
+    public static FindVendorDto formFindVendor(String vendorEmail, String password,
                                                String brandName, String brandLogoImageUrl, LocalDateTime deactivate){
         return FindVendorDto.builder()
                 .vendorEmail(vendorEmail)
-                .vendorPassword(vendorPassword)
+                .password(password)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
                 .deactivate(deactivate)

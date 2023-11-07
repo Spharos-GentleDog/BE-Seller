@@ -3,10 +3,12 @@ package egenius.Vendor.adaptor.web.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Getter
+//@ToString
 public class RequestSignUpVendor {
 
     // 회원 가입시 Front에서 전달 받는 데이터
@@ -19,7 +21,7 @@ public class RequestSignUpVendor {
     private String businessNumber;
 
     @NotBlank(message = "비밀번호는 필수 입니다")
-    private String vendorPassword;
+    private String password;
 
     @NotBlank(message = "통신판매업 신고번호는 필수 입니다")
     private String mailOrderNumber;
@@ -42,7 +44,7 @@ public class RequestSignUpVendor {
 
     private String companyAddress;
 
-    @NotBlank(message = "개업일자는 필수 입니다")
+//    @NotBlank(message = "개업일자는 필수 입니다")
     private LocalDate openedAt;
 
     @NotBlank(message = "대표자명은 필수 입니다")

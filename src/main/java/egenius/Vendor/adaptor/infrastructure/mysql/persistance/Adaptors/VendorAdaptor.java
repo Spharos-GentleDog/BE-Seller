@@ -41,7 +41,7 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
         //DB에 데이터 저장하기 위한 변환 작업
         Integer businessTypeCode = businessTypeConverter.convertToDatabaseColumn(vendor.getBusinessType());
         Integer VendorStatusCode = vendorStatusConvertor.convertToDatabaseColumn(vendor.getVendorStatus());
-        String password = new BCryptPasswordEncoder().encode(vendor.getVendorPassword());
+        String password = new BCryptPasswordEncoder().encode(vendor.getPassword());
 
         VendorEntity vendorEntity = vendorRepository.save(VendorEntity.signUpVendor(
                 vendor.getVendorEmail(),
@@ -68,7 +68,7 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
 
         return VendorDto.formVendors(vendorEntity.getVendorEmail(),
                 vendorEntity.getBusinessNumber(),
-                vendorEntity.getVendorPassword(),
+                vendorEntity.getPassword(),
                 vendorEntity.getMailOrderNumber(),
                 vendorEntity.getBrandName(),
                 vendorEntity.getBrandLogoImageUrl(),
@@ -108,7 +108,7 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
 
         return Vendor.signInVendor(
                 vendorEntity.getVendorEmail(),
-                vendorEntity.getVendorPassword(),
+                vendorEntity.getPassword(),
                 vendorEntity.getVendorName(),
                 vendorEntity.getBrandLogoImageUrl(),
                 vendorEntity.getDeactivate()
