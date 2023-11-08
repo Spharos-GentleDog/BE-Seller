@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/Vendor")
+@RequestMapping("/api/v1/vendor")
 @RequiredArgsConstructor
 @Slf4j
 public class VendorController {

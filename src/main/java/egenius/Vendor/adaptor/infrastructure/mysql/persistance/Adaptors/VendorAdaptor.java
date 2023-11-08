@@ -2,7 +2,6 @@ package egenius.Vendor.adaptor.infrastructure.mysql.persistance.Adaptors;
 
 import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorEntity;
 import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
-import egenius.Vendor.application.ports.out.dto.FindVendorDto;
 import egenius.Vendor.application.ports.out.port.FindVendorPort;
 import egenius.Vendor.domain.enums.BusinessTypes;
 import egenius.Vendor.domain.enums.VendorStatus;
@@ -26,7 +25,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort {
+public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort{
 
 
     // 엔터티의 상태 변화를 구현
@@ -115,4 +114,5 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
         );
 
     }
+
 }

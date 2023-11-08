@@ -77,6 +77,30 @@ public class Vendor implements UserDetails {
                 .build();
     }
 
+    public static Vendor FindVendor(String vendorEmail, String businessNumber, String password, String mailOrderNumber,
+                                      String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
+                                      BusinessTypes businessType, String companyName, String companyAddress, LocalDate openedAt,
+                                      String VendorName, String callCenterNumber,String managerName, String managerPhoneNumber, VendorStatus VendorStatus) {
+        return Vendor.builder()
+                .vendorEmail(vendorEmail)
+                .businessNumber(businessNumber)
+                .password(password)
+                .mailOrderNumber(mailOrderNumber)
+                .brandName(brandName)
+                .brandLogoImageUrl(brandLogoImageUrl)
+                .brandContent(brandContent)
+                .homepageUrl(homepageUrl)
+                .businessType(businessType)
+                .companyName(companyName)
+                .companyAddress(companyAddress)
+                .openedAt(openedAt)
+                .VendorName(VendorName)
+                .callCenterNumber(callCenterNumber)
+                .managerName(managerName)
+                .managerPhoneNumber(managerPhoneNumber)
+                .VendorStatus(VendorStatus)
+                .build();
+    }
 
     //JWT 관련 메서드
     // UserDetails 인터페이스 구현

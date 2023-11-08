@@ -1,28 +1,33 @@
 package egenius.Vendor.adaptor.infrastructure.mysql.persistance.Adaptors;
 
+import egenius.Vendor.adaptor.infrastructure.mysql.entity.BankAccountEntity;
+import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorEntity;
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorAccountRepository;
-import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorBankAccountEntity;
-import egenius.Vendor.application.ports.out.port.VendorAccountPort;
-import egenius.Vendor.domain.VendorBanckAccount;
-import org.springframework.transaction.annotation.Transactional;
+import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorRepository;
+import egenius.Vendor.application.ports.out.port.CreateBankAccountPort;
+import egenius.Vendor.domain.BankAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
-public class VendorAccountAdaptor{
+public class VendorAccountAdaptor implements CreateBankAccountPort {
 
-//    private final VendorAccountRepository VendorAccountRepository;
-//    @Override
-//    @Transactional
-//    public VendorBanckAccount createVendorAccount(VendorBanckAccount VendorAccount) {
-//
-//        VendorBankAccountEntity vendorAccountEntity = VendorAccountRepository.save(VendorBankAccountEntity.createVendorAccount(
-//                VendorAccount.getBankName(),
-//                VendorAccount.getAccountNumber(),
-//                VendorAccount.getOwnerName()
-//        ));
-//
-//        return VendorAccount.formVendorAccountEntity(vendorAccountEntity);
-//    }
+    private final VendorAccountRepository vendorAccountRepository;
+    private final VendorRepository vendorRepository;
+
+    @Override
+    public void createBankAccount(BankAccount bankAccount) {
+
+        Optional<VendorEntity> vendorEntity = vendorRepository.findByVendorEmail(bankAccount.getVendorEmail());
+
+        BankAccountEntity bankAccountEntity = vendorAccountRepository.save(BankAccountEntity.createBankAccount(
+                bankAccount.getBankName(),
+                bankAccount.getBankAccountNumber(),
+                bankAccount.getBankAccountHolder(),
+                vendorEntity.get()
+        ));
+    }
 }

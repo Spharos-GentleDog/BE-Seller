@@ -1,6 +1,5 @@
 package egenius.Vendor.domain;
 
-import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,19 +7,21 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class VendorBanckAccount {
+public class BankAccount {
+
+    // 계좌번호는 암호화 해서 저장해야 한다
 
     private String bankName; // 은행명
     private String bankAccountNumber; //계좌번호
     private String bankAccountHolder; // 예금주
-    private Integer VendorId; // vendor_id
+    private String vendorEmail; // vendor_id
 
-    public static VendorBanckAccount createVendorBankAccount(String bankName, String bankAccountNumber, String bankAccountHolder, Integer VendorId) {
-        return VendorBanckAccount.builder()
+    public static BankAccount createBankAccount(String bankName, String bankAccountNumber, String bankAccountHolder, String vendorEmail) {
+        return BankAccount.builder()
                 .bankName(bankName)
                 .bankAccountNumber(bankAccountNumber)
                 .bankAccountHolder(bankAccountHolder)
-                .VendorId(VendorId)
+                .vendorEmail(vendorEmail)
                 .build();
     }
 
