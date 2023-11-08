@@ -28,6 +28,7 @@ public enum BaseResponseStatus {
     VENDOR_STATUS_IS_NOT_FOUND(HttpStatus.NOT_FOUND, false, 3004,"존재하지 않는 상태 입니다"),
     NO_EXIST_VENDOR(HttpStatus.NOT_FOUND, false, 3005,"존재하지 않는 판매자 입니다"),
     WITHDRAWAL_VENDOR(HttpStatus.NOT_FOUND, false, 3006,"탈퇴한 판매자 입니다"),
+    BANK_ACCOUNT_IS_NOT_FOUND(HttpStatus.NOT_FOUND, false, 3007,"존재하지 않는 계좌 입니다"),
 
     ;
     private final HttpStatusCode httpStatusCode;

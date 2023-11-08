@@ -25,4 +25,12 @@ public class BankAccount {
                 .build();
     }
 
+    public static BankAccount infoBankAccount(String bankName, String bankAccountNumber, String bankAccountHolder, String vendorEmail) {
+        return BankAccount.builder()
+                .bankName(bankName)
+                .bankAccountNumber(bankAccountNumber)
+                .bankAccountHolder(bankAccountHolder)
+                .vendorEmail(vendorEmail)
+                .build();
+    }
 }

@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 @Builder
 @Table(name = "vendor_bank_account")
+@ToString
 public class BankAccountEntity {
 
     @Id
@@ -26,14 +27,14 @@ public class BankAccountEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vendor_id", referencedColumnName = "id")
-    private VendorEntity VendorId; // vendor_id
+    private VendorEntity vendorId; // vendor_id
 
     public static BankAccountEntity createBankAccount(String bankName, String bankAccountNumber, String bankAccountHolder, VendorEntity vendorId) {
         return BankAccountEntity.builder()
                 .bankName(bankName)
                 .bankAccountNumber(bankAccountNumber)
                 .bankAccountHolder(bankAccountHolder)
-                .VendorId(vendorId)
+                .vendorId(vendorId)
                 .build();
     }
 
