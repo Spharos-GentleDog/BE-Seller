@@ -12,4 +12,5 @@ public interface VendorRepository extends JpaRepository<VendorEntity, Long> {
     //이메일 중복체크 및 존재 확인
     Optional<VendorEntity> findByVendorEmail(String vendorEmail);
 
+
 }
