@@ -123,11 +123,6 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
     public String getUsername() {
         // 유저네임 반환
         return vendorEmail; // 이름으로 사용 하는 데이터 (Vendor : brandName)
