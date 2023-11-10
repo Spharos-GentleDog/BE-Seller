@@ -36,15 +36,15 @@ JWT:
     refresh-expiration-time: 2592000000     # 30 일 2592000000 # 1시간 3600000 # 3분 180000
 
 
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
-#
-#  instance:
-#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 
 #  datasource:
