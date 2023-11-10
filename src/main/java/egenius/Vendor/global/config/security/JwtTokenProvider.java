@@ -113,6 +113,7 @@ public class JwtTokenProvider {
         log.info("generateToken {} ", userDetails);
         return Jwts.builder()
                 .setClaims(extractClaims)
+                .claim("role","VENDOR")
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new java.util.Date(System.currentTimeMillis()))
                 .setExpiration(new java.util.Date(System.currentTimeMillis() + expiration))
