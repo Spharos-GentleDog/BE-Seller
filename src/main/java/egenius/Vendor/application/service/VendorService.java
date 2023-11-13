@@ -1,9 +1,11 @@
 package egenius.Vendor.application.service;
 
 import egenius.Vendor.application.ports.in.port.CheckEmailUseCase;
+import egenius.Vendor.application.ports.in.port.EmailAuthUseCase;
 import egenius.Vendor.application.ports.in.port.SignInUseCase;
 import egenius.Vendor.application.ports.in.port.SignUpUseCase;
 import egenius.Vendor.application.ports.in.query.CheckEmailQuery;
+import egenius.Vendor.application.ports.in.query.EmailAuthQuery;
 import egenius.Vendor.application.ports.in.query.SignInQuery;
 import egenius.Vendor.application.ports.in.query.SignUpQuery;
 import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
@@ -27,7 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUseCase {
+public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUseCase{
 
     // 비지니스 로직이 위치하는 곳
     // 비지니스 로직 : 도메인 모델의 상태를 변경하는 것
@@ -122,6 +124,7 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
         return SignInDto.formSignIn(jwt, refreshToken, vendor.getVendorEmail(), vendor.getBrandName(),
                 vendor.getBrandLogoImageUrl());
     }
+
 
 
 }
