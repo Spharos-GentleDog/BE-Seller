@@ -1,20 +1,9 @@
 package egenius.Vendor.application.service;
 
-import egenius.Vendor.application.ports.in.port.CheckEmailUseCase;
-import egenius.Vendor.application.ports.in.port.EmailAuthUseCase;
-import egenius.Vendor.application.ports.in.port.SignInUseCase;
-import egenius.Vendor.application.ports.in.port.SignUpUseCase;
-import egenius.Vendor.application.ports.in.query.CheckEmailQuery;
-import egenius.Vendor.application.ports.in.query.EmailAuthQuery;
-import egenius.Vendor.application.ports.in.query.SignInQuery;
-import egenius.Vendor.application.ports.in.query.SignUpQuery;
-import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
-import egenius.Vendor.application.ports.out.dto.FindVendorDto;
-import egenius.Vendor.application.ports.out.dto.SignInDto;
-import egenius.Vendor.application.ports.out.dto.VendorDto;
-import egenius.Vendor.application.ports.out.port.CheckEmailPort;
-import egenius.Vendor.application.ports.out.port.FindVendorPort;
-import egenius.Vendor.application.ports.out.port.VendorPort;
+import egenius.Vendor.application.ports.in.port.*;
+import egenius.Vendor.application.ports.in.query.*;
+import egenius.Vendor.application.ports.out.dto.*;
+import egenius.Vendor.application.ports.out.port.*;
 import egenius.Vendor.domain.Vendor;
 import egenius.Vendor.global.common.exception.BaseException;
 import egenius.Vendor.global.common.response.BaseResponseStatus;
@@ -26,10 +15,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUseCase{
+public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUseCase, FindEmailUseCase, WithdrawalUseCase {
 
     // 비지니스 로직이 위치하는 곳
     // 비지니스 로직 : 도메인 모델의 상태를 변경하는 것
@@ -37,6 +28,8 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
     private final VendorPort vendorPort;
     private final CheckEmailPort checkEmailPort;
     private final FindVendorPort findVendorPort;
+    private final FindEmailPort findEmailPort;
+    private final WithdrawalVendorPort withdrawalVendorPort;
 
     //JWT 발급
     private final AuthenticationManager authenticationManager;
@@ -125,6 +118,26 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
                 vendor.getBrandLogoImageUrl());
     }
 
+    // 이메일 찾기
+    @Override
+    public FindEmailDto findEmail(FindEmailQuery findEmailQuery) {
+
+        FindEmailDto findEmailDto = findEmailPort.findEmail(Vendor.findVendorEmail(
+                                        findEmailQuery.getManagerName(),
+                                        findEmailQuery.getManagerPhoneNumber()
+                                ));
+        return findEmailDto;
+    }
+
+    // 회원 탈퇴
+    @Override
+    public void withdrawal(WithdrawalQuery withdrawalQuery) {
+
+        withdrawalVendorPort.withdrawalVendor(Vendor.deactivateVendor(
+                withdrawalQuery.getEmail(),
+                LocalDateTime.now()
+        ));
 
 
+    }
 }

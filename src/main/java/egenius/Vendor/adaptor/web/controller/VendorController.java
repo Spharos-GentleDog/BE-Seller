@@ -23,6 +23,8 @@ public class VendorController {
     private final SignInUseCase signInUseCase;
     private final EmailAuthUseCase emailAuthUseCase;
     private final EmailVerifyUseCase emailVerifyUseCase;
+    private final FindEmailUseCase findEmailUseCase;
+    private final WithdrawalUseCase withdrawalUseCase;
 
 
     // web에서 request로 데이터 받음
@@ -71,6 +73,24 @@ public class VendorController {
         return new BaseResponse<>();
     }
 
+    // 아이디 찾기
+    @PostMapping("/find-email")
+    public BaseResponse<?> FindEmail(@RequestBody @Valid RequestFindEmail requestFindEmail){
+        log.info("아이디 찾기: {}", requestFindEmail);
+        return new BaseResponse<>(findEmailUseCase.findEmail(FindEmailQuery.toQuery(
+                requestFindEmail.getManagerName(),
+                requestFindEmail.getManagerPhoneNumber())));
+    }
+
+    //회원 탈퇴
+    @PostMapping("/withdrawal")
+    public BaseResponse<?> Withdrawal(@RequestBody @Valid RequestWithdrawalVendor requestWithdrawalVendor){
+        log.info("회원 탈퇴: {}", requestWithdrawalVendor.getEmail());
+
+        withdrawalUseCase.withdrawal(WithdrawalQuery.toQuery(requestWithdrawalVendor.getEmail()));
+
+        return new BaseResponse<>();
+    }
     /*
         API 정의서 나오는 대로 작업 할 것
         //todo: 아이디 찾기
@@ -82,11 +102,6 @@ public class VendorController {
         // todo : 로그인
     */
 
-    //todo: 계좌 생성
-
-    //todo: 판매자 상태 변경
-
-    //todo : 판매자 상품 목록 생성
 
 
 }

@@ -2,15 +2,14 @@ package egenius.Vendor.adaptor.infrastructure.mysql.persistance.Adaptors;
 
 import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorEntity;
 import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
-import egenius.Vendor.application.ports.out.port.FindVendorPort;
+import egenius.Vendor.application.ports.out.dto.FindEmailDto;
+import egenius.Vendor.application.ports.out.port.*;
 import egenius.Vendor.domain.enums.BusinessTypes;
 import egenius.Vendor.domain.enums.VendorStatus;
 import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.BusinessTypeConverter;
 import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.VendorStatusConvertor;
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorRepository;
 import egenius.Vendor.application.ports.out.dto.VendorDto;
-import egenius.Vendor.application.ports.out.port.CheckEmailPort;
-import egenius.Vendor.application.ports.out.port.VendorPort;
 import egenius.Vendor.domain.Vendor;
 import egenius.Vendor.global.common.exception.BaseException;
 import egenius.Vendor.global.common.response.BaseResponseStatus;
@@ -25,7 +24,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort{
+public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort, FindEmailPort, WithdrawalVendorPort {
 
 
     // 엔터티의 상태 변화를 구현
@@ -109,10 +108,44 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
                 vendorEntity.getVendorEmail(),
                 vendorEntity.getPassword(),
                 vendorEntity.getVendorName(),
-                vendorEntity.getBrandLogoImageUrl(),
-                vendorEntity.getDeactivate()
+                vendorEntity.getBrandLogoImageUrl()
         );
 
     }
 
+    @Override
+    public FindEmailDto findEmail(Vendor vendor) {
+
+        Optional<VendorEntity> vendorEntity = vendorRepository.findByManagerNameAndManagerPhoneNumber(
+                vendor.getManagerName(),
+                vendor.getManagerPhoneNumber());
+
+        if(vendorEntity.isPresent()){
+            log.info("회원 존재");
+            return FindEmailDto.formFindEmail(vendorEntity.get().getVendorEmail());
+        }
+
+        throw new BaseException(BaseResponseStatus.NO_EXIST_VENDOR);
+    }
+
+    @Override
+    @Transactional
+    public void withdrawalVendor(Vendor vendor) {
+
+            Optional<VendorEntity> vendorEntityOptional = vendorRepository.findByVendorEmail(vendor.getVendorEmail());
+
+            log.info("회원 존재1" + vendor.getDeactivate());
+            if(vendorEntityOptional.isPresent()){
+                VendorEntity vendorEntity = vendorEntityOptional.get();
+
+                // 비활성화 전 vendorEntity의 현재 상태 로깅
+                log.info("비활성화 전: {}", vendorEntity);
+
+                vendorRepository.save(vendorEntity.deactivate(vendor.getDeactivate()));
+                return;
+            }
+
+            throw new BaseException(BaseResponseStatus.NO_EXIST_VENDOR);
+
+    }
 }

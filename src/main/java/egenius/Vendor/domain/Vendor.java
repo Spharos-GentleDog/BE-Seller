@@ -5,6 +5,7 @@ import egenius.Vendor.domain.enums.VendorStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
+@ToString
 public class Vendor implements UserDetails {
 
     // 도메인 로직이 위치하는 곳
@@ -67,38 +69,27 @@ public class Vendor implements UserDetails {
     }
 
     public static Vendor signInVendor(String vendorEmail, String password, String brandName,
-                                      String brandLogoImageUrl, LocalDateTime deactivate) {
+                                      String brandLogoImageUrl) {
         return Vendor.builder()
                 .vendorEmail(vendorEmail)
                 .password(password)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
-                .deactivate(deactivate)
                 .build();
     }
 
-    public static Vendor FindVendor(String vendorEmail, String businessNumber, String password, String mailOrderNumber,
-                                      String brandName, String brandLogoImageUrl, String brandContent, String homepageUrl,
-                                      BusinessTypes businessType, String companyName, String companyAddress, LocalDate openedAt,
-                                      String VendorName, String callCenterNumber,String managerName, String managerPhoneNumber, VendorStatus VendorStatus) {
+    public static Vendor findVendorEmail(String managerName, String managerPhoneNumber){
         return Vendor.builder()
-                .vendorEmail(vendorEmail)
-                .businessNumber(businessNumber)
-                .password(password)
-                .mailOrderNumber(mailOrderNumber)
-                .brandName(brandName)
-                .brandLogoImageUrl(brandLogoImageUrl)
-                .brandContent(brandContent)
-                .homepageUrl(homepageUrl)
-                .businessType(businessType)
-                .companyName(companyName)
-                .companyAddress(companyAddress)
-                .openedAt(openedAt)
-                .VendorName(VendorName)
-                .callCenterNumber(callCenterNumber)
                 .managerName(managerName)
                 .managerPhoneNumber(managerPhoneNumber)
-                .VendorStatus(VendorStatus)
+                .build();
+    }
+
+    //회원 탈퇴
+    public static Vendor deactivateVendor(String vendorEmail, LocalDateTime deactivate) {
+        return Vendor.builder()
+                .vendorEmail(vendorEmail)
+                .deactivate(deactivate)
                 .build();
     }
 
