@@ -4,16 +4,14 @@ import egenius.Vendor.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 올바르지 않은 객체 생성을 막아준다
 @Entity
@@ -113,6 +111,14 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
                 .build();
     }
 
+    public void deactivate(LocalDateTime deactivate) {
+        this.deactivate = deactivate;
+    }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
 
     //JWT 관련 메서드
     // UserDetails 인터페이스 구현
@@ -151,4 +157,6 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
         // 계정 활성화 여부
         return true;
     }
+
+
 }
