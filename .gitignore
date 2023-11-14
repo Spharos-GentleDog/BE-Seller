@@ -38,6 +38,7 @@ bin/
 ### application.yml, application.properties
 **/application-local.yml
 **/application.properties
+**/application-local.yaml
 
 
 
