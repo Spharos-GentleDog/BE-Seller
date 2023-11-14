@@ -111,11 +111,12 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
                 .build();
     }
 
-    public static VendorEntity deactivate(LocalDateTime deactivate) {
+    public void deactivate(LocalDateTime deactivate) {
+        this.deactivate = deactivate;
+    }
 
-        return VendorEntity.builder()
-                .deactivate(deactivate)
-                .build();
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
     }
 
 

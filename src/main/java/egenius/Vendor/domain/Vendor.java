@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -93,12 +94,30 @@ public class Vendor implements UserDetails {
                 .build();
     }
 
+    //비밀번호 변경
+    public static Vendor changePassword(String vendorEmail, String password) {
+        return Vendor.builder()
+                .vendorEmail(vendorEmail)
+                .password(password)
+                .build();
+    }
+
+    //회원정보 검색
+    public static Vendor getVendorInfo(String vendorEmail) {
+        return Vendor.builder()
+                .vendorEmail(vendorEmail)
+                .build();
+    }
+
+
     //JWT 관련 메서드
     // UserDetails 인터페이스 구현
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 권한 반환
-        return null; // role 추가
+        // 권한
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("VENDOR"));
+        return authorities;
     }
 
     @Override

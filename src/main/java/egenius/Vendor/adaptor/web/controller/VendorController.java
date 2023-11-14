@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/v1/vendor")
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class VendorController {
     private final EmailVerifyUseCase emailVerifyUseCase;
     private final FindEmailUseCase findEmailUseCase;
     private final WithdrawalUseCase withdrawalUseCase;
+    private final VendorInfoUseCase vendorInfoUseCase;
 
 
     // web에서 request로 데이터 받음
@@ -91,16 +94,28 @@ public class VendorController {
 
         return new BaseResponse<>();
     }
-    /*
-        API 정의서 나오는 대로 작업 할 것
-        //todo: 아이디 찾기
 
-        //todo: 비밀번호 재설정
+    //비밀번호 변경
+    @PostMapping("/change-password")
+    public BaseResponse<?> ChangePassword(@RequestBody @Valid RequestChangePassword requestChangePassword){
+        log.info("비밀번호 변경: {}", requestChangePassword);
+        return new BaseResponse<>();
+    }
 
-        // todo : 이메일 인증
+    //판매자 정보 확인
+//    @GetMapping("/info")
+//    public BaseResponse<?> Info(@RequestHeader("") String email){
+//        log.info("판매자 정보 확인: {}", principal);
+//        vendorInfoUseCase.getVendorInfo(VendorInfoQuery.toQuery(principal.getName()));
+//        return new BaseResponse<>();
+//    }
 
-        // todo : 로그인
-    */
+    //판매자 정보 변경
+//    @PostMapping("/change-info")
+//    public BaseResponse<?> ChangeInfo(@RequestBody @Valid RequestChangeInfo requestChangeInfo){
+//        log.info("판매자 정보 변경: {}", requestChangeInfo);
+//        return new BaseResponse<>();
+//    }
 
 
 

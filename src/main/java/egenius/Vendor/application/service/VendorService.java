@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUseCase, FindEmailUseCase, WithdrawalUseCase {
+public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUseCase, FindEmailUseCase,
+        WithdrawalUseCase, ChangePasswordUseCase,VendorInfoUseCase {
 
     // 비지니스 로직이 위치하는 곳
     // 비지니스 로직 : 도메인 모델의 상태를 변경하는 것
@@ -30,6 +31,8 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
     private final FindVendorPort findVendorPort;
     private final FindEmailPort findEmailPort;
     private final WithdrawalVendorPort withdrawalVendorPort;
+    private final ChangePasswordPort changePasswordPort;
+    private final VendorInfoPort VendorInfoPort;
 
     //JWT 발급
     private final AuthenticationManager authenticationManager;
@@ -114,8 +117,15 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
         System.out.print("jwt : " + jwt);
         System.out.print("jwt : " + jwt);
 
-        return SignInDto.formSignIn(jwt, refreshToken, vendor.getVendorEmail(), vendor.getBrandName(),
-                vendor.getBrandLogoImageUrl());
+        log.info("권한정보{}", vendor.getAuthorities());
+
+        return SignInDto.formSignIn(jwt,
+                refreshToken,
+                vendor.getVendorEmail(),
+                vendor.getBrandName(),
+                vendor.getBrandLogoImageUrl(),
+                vendor.getAuthorities()
+                );
     }
 
     // 이메일 찾기
@@ -138,6 +148,26 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
                 LocalDateTime.now()
         ));
 
+    }
 
+    //비밀번호 변경
+    @Override
+    public void changePassword(ChangePasswordQuery changePasswordQuery) {
+
+        changePasswordPort.changePassword(Vendor.changePassword(
+                changePasswordQuery.getEmail(),
+                changePasswordQuery.getNewPassword()
+        ));
+
+    }
+
+    @Override
+    public VendorInfoDto getVendorInfo(VendorInfoQuery vendorInfoQuery) {
+
+        VendorInfoDto vendorInfoDto = VendorInfoPort.getVendorInfo(Vendor.getVendorInfo(
+                vendorInfoQuery.getEmail()
+        ));
+
+        return vendorInfoDto;
     }
 }

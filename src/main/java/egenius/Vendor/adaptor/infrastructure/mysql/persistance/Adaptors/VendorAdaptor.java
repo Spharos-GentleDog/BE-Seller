@@ -3,6 +3,7 @@ package egenius.Vendor.adaptor.infrastructure.mysql.persistance.Adaptors;
 import egenius.Vendor.adaptor.infrastructure.mysql.entity.VendorEntity;
 import egenius.Vendor.application.ports.out.dto.CheckEmailDto;
 import egenius.Vendor.application.ports.out.dto.FindEmailDto;
+import egenius.Vendor.application.ports.out.dto.VendorInfoDto;
 import egenius.Vendor.application.ports.out.port.*;
 import egenius.Vendor.domain.enums.BusinessTypes;
 import egenius.Vendor.domain.enums.VendorStatus;
@@ -13,6 +14,7 @@ import egenius.Vendor.application.ports.out.dto.VendorDto;
 import egenius.Vendor.domain.Vendor;
 import egenius.Vendor.global.common.exception.BaseException;
 import egenius.Vendor.global.common.response.BaseResponseStatus;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,8 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort, FindEmailPort, WithdrawalVendorPort {
+public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort, FindEmailPort, WithdrawalVendorPort,
+    ChangePasswordPort, VendorInfoPort {
 
 
     // 엔터티의 상태 변화를 구현
@@ -136,16 +139,74 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
 
             log.info("회원 존재1" + vendor.getDeactivate());
             if(vendorEntityOptional.isPresent()){
+
                 VendorEntity vendorEntity = vendorEntityOptional.get();
 
                 // 비활성화 전 vendorEntity의 현재 상태 로깅
-                log.info("비활성화 전: {}", vendorEntity);
+                log.info("비활성화 전: {}",vendorEntity.getBrandLogoImageUrl());
 
-                vendorRepository.save(vendorEntity.deactivate(vendor.getDeactivate()));
+                // 비활성화
+                vendorEntity.deactivate(vendor.getDeactivate());
+                log.info("비활성화 후: {}", vendorEntity.getBrandLogoImageUrl());
+                vendorRepository.save(vendorEntity);
                 return;
             }
 
             throw new BaseException(BaseResponseStatus.NO_EXIST_VENDOR);
 
+    }
+
+    @Override
+    public void changePassword(Vendor vendor) {
+
+            Optional<VendorEntity> vendorEntityOptional = vendorRepository.findByVendorEmail(vendor.getVendorEmail());
+
+            if(vendorEntityOptional.isPresent()){
+
+                VendorEntity vendorEntity = vendorEntityOptional.get();
+
+                // 비밀번호 변경
+                vendorEntity.changePassword(vendor.getPassword());
+                vendorRepository.save(vendorEntity);
+                return;
+            }
+
+            throw new BaseException(BaseResponseStatus.NO_EXIST_VENDOR);
+    }
+
+    @Override
+    public VendorInfoDto getVendorInfo(Vendor vendor) {
+
+        Optional<VendorEntity> vendorEntityOptional = vendorRepository.findByVendorEmail(vendor.getVendorEmail());
+
+        if(vendorEntityOptional.isPresent()){
+
+            VendorEntity vendorEntity = vendorEntityOptional.get();
+
+            BusinessTypes businessTypeCode = businessTypeConverter.convertToEntityAttribute(
+                    vendorEntity.getBusinessType());
+
+            String businessType = businessTypeCode.getNameValue();
+
+            return VendorInfoDto.formVendorInfo(
+                    vendorEntity.getVendorEmail(),
+                    vendorEntity.getBusinessNumber(),
+                    vendorEntity.getMailOrderNumber(),
+                    vendorEntity.getBrandName(),
+                    vendorEntity.getBrandLogoImageUrl(),
+                    vendorEntity.getBrandContent(),
+                    vendorEntity.getHomepageUrl(),
+                    businessType,
+                    vendorEntity.getCompanyName(),
+                    vendorEntity.getCompanyAddress(),
+                    vendorEntity.getOpenedAt(),
+                    vendorEntity.getVendorName(),
+                    vendorEntity.getCallCenterNumber(),
+                    vendorEntity.getManagerName(),
+                    vendorEntity.getManagerPhoneNumber()
+            );
+        }
+
+        throw new BaseException(BaseResponseStatus.NO_EXIST_VENDOR);
     }
 }
