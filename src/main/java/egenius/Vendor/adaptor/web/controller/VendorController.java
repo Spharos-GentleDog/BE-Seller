@@ -28,6 +28,7 @@ public class VendorController {
     private final FindEmailUseCase findEmailUseCase;
     private final WithdrawalUseCase withdrawalUseCase;
     private final VendorInfoUseCase vendorInfoUseCase;
+    private final ChangeInfoUseCase changeInfoUseCase;
 
 
     // web에서 request로 데이터 받음
@@ -111,11 +112,22 @@ public class VendorController {
     }
 
     //판매자 정보 변경
-//    @PostMapping("/change-info")
-//    public BaseResponse<?> ChangeInfo(@RequestBody @Valid RequestChangeInfo requestChangeInfo){
-//        log.info("판매자 정보 변경: {}", requestChangeInfo);
-//        return new BaseResponse<>();
-//    }
+    @PostMapping("/change-info")
+    public BaseResponse<?> ChangeInfo(@RequestBody @Valid RequestChangeInfo requestChangeInfo){
+        log.info("판매자 정보 변경: {}", requestChangeInfo);
+
+        changeInfoUseCase.changeInfo(ChangeInfoQuery.toQuery(
+                requestChangeInfo.getEmail(),
+                requestChangeInfo.getBrandLogoImageUrl(),
+                requestChangeInfo.getBrandContent(),
+                requestChangeInfo.getHomepageUrl(),
+                requestChangeInfo.getCompanyAddress(),
+                requestChangeInfo.getCallCenterNumber(),
+                requestChangeInfo.getManagerName(),
+                requestChangeInfo.getManagerPhoneNumber()));
+
+        return new BaseResponse<>();
+    }
 
 
 

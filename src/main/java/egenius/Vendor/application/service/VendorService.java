@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Slf4j
 public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUseCase, FindEmailUseCase,
-        WithdrawalUseCase, ChangePasswordUseCase,VendorInfoUseCase {
+        WithdrawalUseCase, ChangePasswordUseCase,VendorInfoUseCase,ChangeInfoUseCase {
 
     // 비지니스 로직이 위치하는 곳
     // 비지니스 로직 : 도메인 모델의 상태를 변경하는 것
@@ -33,6 +33,7 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
     private final WithdrawalVendorPort withdrawalVendorPort;
     private final ChangePasswordPort changePasswordPort;
     private final VendorInfoPort VendorInfoPort;
+    private final ChangeInfoPort changeInfoPort;
 
     //JWT 발급
     private final AuthenticationManager authenticationManager;
@@ -103,7 +104,7 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
 
         // email로 판매자 조회
         Vendor vendor = findVendorPort.findVendor(signInQuery.getVendorEmail());
-
+        log.info("판매자 정보 {}",vendor.getDeactivate());
         // 탈퇴한 판매자면 로그인 불가
         if(vendor.getDeactivate() != null){
             throw new BaseException(BaseResponseStatus.WITHDRAWAL_VENDOR);
@@ -174,10 +175,34 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
     @Override
     public VendorInfoDto getVendorInfo(VendorInfoQuery vendorInfoQuery) {
 
+        // email로 판매자 조회
+        Vendor vendor = findVendorPort.findVendor(vendorInfoQuery.getEmail());
+        log.info("판매자 정보 {}",vendor.getDeactivate());
+        // 탈퇴한 판매자면 조회 불가
+        if(vendor.getDeactivate() != null){
+            throw new BaseException(BaseResponseStatus.WITHDRAWAL_VENDOR);
+        }
+
         VendorInfoDto vendorInfoDto = VendorInfoPort.getVendorInfo(Vendor.getVendorInfo(
                 vendorInfoQuery.getEmail()
         ));
 
         return vendorInfoDto;
+    }
+
+    @Override
+    public void changeInfo(ChangeInfoQuery changeInfoQuery) {
+
+        changeInfoPort.changeInfo(Vendor.changeInfo(
+                changeInfoQuery.getEmail(),
+                changeInfoQuery.getBrandLogoImageUrl(),
+                changeInfoQuery.getBrandContent(),
+                changeInfoQuery.getHomepageUrl(),
+                changeInfoQuery.getCompanyAddress(),
+                changeInfoQuery.getCallCenterNumber(),
+                changeInfoQuery.getManagerName(),
+                changeInfoQuery.getManagerPhoneNumber()
+        ));
+
     }
 }

@@ -27,7 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort, FindEmailPort, WithdrawalVendorPort,
-    ChangePasswordPort, VendorInfoPort {
+    ChangePasswordPort, VendorInfoPort,ChangeInfoPort {
 
 
     // 엔터티의 상태 변화를 구현
@@ -112,7 +112,8 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
                 vendorEntity.getVendorEmail(),
                 vendorEntity.getPassword(),
                 vendorEntity.getVendorName(),
-                vendorEntity.getBrandLogoImageUrl()
+                vendorEntity.getBrandLogoImageUrl(),
+                vendorEntity.getDeactivate()
         );
 
     }
@@ -209,5 +210,30 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
         }
 
         throw new BaseException(BaseResponseStatus.NO_EXIST_VENDOR);
+    }
+
+    @Override
+    public void changeInfo(Vendor vendor) {
+
+        Optional<VendorEntity> vendorEntityOptional = vendorRepository.findByVendorEmail(vendor.getVendorEmail());
+
+        if(vendorEntityOptional.isPresent()){
+
+            VendorEntity vendorEntity = vendorEntityOptional.get();
+
+            // 정보 변경
+            vendorEntity.changeInfo(
+                    vendor.getBrandLogoImageUrl(),
+                    vendor.getBrandContent(),
+                    vendor.getHomepageUrl(),
+                    vendor.getCompanyAddress(),
+                    vendor.getCallCenterNumber(),
+                    vendor.getManagerName(),
+                    vendor.getManagerPhoneNumber()
+            );
+            vendorRepository.save(vendorEntity);
+        }
+
+
     }
 }
