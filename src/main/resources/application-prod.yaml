@@ -43,7 +43,7 @@ spring:
       pageable:
         one-indexed-parameters: true
 JWT:
-  secret-key: ${JWT_SECRET_KEY}
+  secret-key: ${VENDOR_JWT_SECRET_KEY}
   header: Authorization
   prefix: Bearer
   token:

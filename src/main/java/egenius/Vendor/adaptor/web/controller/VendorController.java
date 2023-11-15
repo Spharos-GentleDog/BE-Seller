@@ -103,12 +103,12 @@ public class VendorController {
     }
 
     //판매자 정보 확인
-//    @GetMapping("/info")
-//    public BaseResponse<?> Info(@RequestHeader("") String email){
-//        log.info("판매자 정보 확인: {}", principal);
-//        vendorInfoUseCase.getVendorInfo(VendorInfoQuery.toQuery(principal.getName()));
-//        return new BaseResponse<>();
-//    }
+    @GetMapping("/info")
+    public BaseResponse<?> Info(@RequestHeader("email") String email){
+        log.info("판매자 정보 확인: {}", email);
+
+        return new BaseResponse<>(vendorInfoUseCase.getVendorInfo(VendorInfoQuery.toQuery(email)));
+    }
 
     //판매자 정보 변경
 //    @PostMapping("/change-info")
