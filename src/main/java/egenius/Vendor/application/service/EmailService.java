@@ -86,7 +86,7 @@ public class EmailService implements EmailAuthUseCase, EmailVerifyUseCase {
 
         // 이메일이 존재한다면 이미 가입된 유저
         if (checkEmailPort.checkEmail(emailAuthQuery.getEmail()).isVendorEmail()) {
-            throw new BaseException(BaseResponseStatus.EMAIL_NOT_FOUND);
+            throw new BaseException(BaseResponseStatus.EMAIL_IS_USED);
         }
 
         if (redisUtil.existData(emailAuthQuery.getEmail())) {

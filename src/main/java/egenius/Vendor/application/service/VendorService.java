@@ -51,10 +51,20 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
         // -> DB : Integer 코드 값
         // web 단 : 코드로 들어온 값을 enum으로 변경 해줘야 한다
         // adaptor 단 : enum을 코드 값으로 변경 해줘야 한다
+
+        // 중복 확인 후 회원가입
+        CheckEmailDto checkEmailDto = checkEmailPort.checkEmail(signUpQuery.getVendorEmail());
+        if(checkEmailDto.isVendorEmail()){
+            throw new BaseException(BaseResponseStatus.EMAIL_IS_USED);
+        }
+
+        // 비밀번호 암호화
+        String password = new BCryptPasswordEncoder().encode(signUpQuery.getPassword());
+
         VendorDto vendorDto = vendorPort.signUpVendor(Vendor.signUpVendor(
                 signUpQuery.getVendorEmail(),
                 signUpQuery.getBusinessNumber(),
-                signUpQuery.getPassword(),
+                password,
                 signUpQuery.getMailOrderNumber(),
                 signUpQuery.getBrandName(),
                 signUpQuery.getBrandLogoImageUrl(),
@@ -82,7 +92,7 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
         log.info("이메일 인증 정보 {}",checkEmailDto.isVendorEmail());
         //이미 사용 중인 이메일인 경우 error 반환
         if(checkEmailDto.isVendorEmail()){
-            throw new BaseException(BaseResponseStatus.EMAIL_NOT_FOUND);
+            throw new BaseException(BaseResponseStatus.EMAIL_IS_USED);
         }
         return checkEmailDto;
     }
