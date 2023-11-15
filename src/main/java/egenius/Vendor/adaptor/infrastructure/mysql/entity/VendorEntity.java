@@ -119,6 +119,18 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
         this.password = newPassword;
     }
 
+    public void changeInfo(String brandLogoImageUrl, String brandContent, String homepageUrl, String companyAddress,
+                           String callCenterNumber, String managerName, String managerPhoneNumber) {
+
+        this.brandLogoImageUrl = brandLogoImageUrl;
+        this.brandContent = brandContent;
+        this.homepageUrl = homepageUrl;
+        this.companyAddress = companyAddress;
+        this.callCenterNumber = callCenterNumber;
+        this.managerName = managerName;
+        this.managerPhoneNumber = managerPhoneNumber;
+
+    }
 
     //JWT 관련 메서드
     // UserDetails 인터페이스 구현

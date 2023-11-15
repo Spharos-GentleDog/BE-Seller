@@ -70,12 +70,13 @@ public class Vendor implements UserDetails {
     }
 
     public static Vendor signInVendor(String vendorEmail, String password, String brandName,
-                                      String brandLogoImageUrl) {
+                                      String brandLogoImageUrl,LocalDateTime deactivate) {
         return Vendor.builder()
                 .vendorEmail(vendorEmail)
                 .password(password)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
+                .deactivate(deactivate)
                 .build();
     }
 
@@ -109,6 +110,21 @@ public class Vendor implements UserDetails {
                 .build();
     }
 
+    // 판매자 정보 수정
+    public static Vendor changeInfo(String vendorEmail, String brandLogoImageUrl, String brandContent, String homepageUrl,
+                                    String companyAddress, String callCenterNumber, String managerName,
+                                    String managerPhoneNumber){
+        return Vendor.builder()
+                .vendorEmail(vendorEmail)
+                .brandLogoImageUrl(brandLogoImageUrl)
+                .brandContent(brandContent)
+                .homepageUrl(homepageUrl)
+                .companyAddress(companyAddress)
+                .callCenterNumber(callCenterNumber)
+                .managerName(managerName)
+                .managerPhoneNumber(managerPhoneNumber)
+                .build();
+    }
 
     //JWT 관련 메서드
     // UserDetails 인터페이스 구현
