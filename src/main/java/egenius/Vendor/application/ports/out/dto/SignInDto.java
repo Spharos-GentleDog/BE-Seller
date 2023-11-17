@@ -14,18 +14,18 @@ public class SignInDto {
     private String vendorEmail;
     private String brandName; // 브랜드 이름
     private String brandLogoImageUrl;
-    private Collection<?> authorities; // 권한
-
+//    private Collection<?> authorities; // 권한
+    private String role;
 
     public static SignInDto formSignIn(String accessToken, String refreshToken, String vendorEmail, String brandName,
-                                       String brandLogoImageUrl, Collection<?> authorities){
+                                       String brandLogoImageUrl, String role){
         return SignInDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .vendorEmail(vendorEmail)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
-                .authorities(authorities)
+                .role(role)
                 .build();
     }
 }
