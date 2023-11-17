@@ -1,6 +1,9 @@
 package egenius.Vendor.adaptor.infrastructure.mysql.entity;
 
 
+import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.DisplayStatusConverter;
+import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.SalesStatusConverter;
+import egenius.Vendor.domain.enums.DisplayStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,13 +23,15 @@ public class VendorProductEntity {
     @JoinColumn(name = "Vendor_id", referencedColumnName = "id")
     private VendorEntity VendorId;
 
-    @Column(name = "product_id", unique = true, nullable = false)
-    private Long productId;
+    @Column(name = "product_detail_id", unique = true, nullable = false)
+    private Long productDetailId;
 
     @Column(name = "display_status", nullable = false)
+    @Convert(converter = DisplayStatusConverter.class)
     private Integer displayStatus;
 
     @Column(name = "sales_status", nullable = false)
+    @Convert(converter = SalesStatusConverter.class)
     private Integer salesStatus;
 
     @Column(name = "sales_count", nullable = false)
@@ -34,4 +39,19 @@ public class VendorProductEntity {
 
     @Column(name = "save_count", nullable = true)
     private  Integer saveCount;
+
+    // 상품 생성
+    public static VendorProductEntity createVendorProductEntity(VendorEntity vendorEntity, Long productDetailId,
+                                                                Integer displayStatus, Integer salesStatus,
+                                                                Integer salesCount, Integer saveCount){
+        return VendorProductEntity.builder()
+                .VendorId(vendorEntity)
+                .productDetailId(productDetailId)
+                .displayStatus(displayStatus)
+                .salesStatus(salesStatus)
+                .salesCount(salesCount)
+                .saveCount(saveCount)
+                .build();
+    }
+
 }
