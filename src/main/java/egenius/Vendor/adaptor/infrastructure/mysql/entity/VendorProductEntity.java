@@ -27,11 +27,9 @@ public class VendorProductEntity {
     private Long productDetailId;
 
     @Column(name = "display_status", nullable = false)
-    @Convert(converter = DisplayStatusConverter.class)
     private Integer displayStatus;
 
     @Column(name = "sales_status", nullable = false)
-    @Convert(converter = SalesStatusConverter.class)
     private Integer salesStatus;
 
     @Column(name = "sales_count", nullable = false)
