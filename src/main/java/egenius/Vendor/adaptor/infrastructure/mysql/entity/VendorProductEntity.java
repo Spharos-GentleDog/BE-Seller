@@ -20,8 +20,8 @@ public class VendorProductEntity {
     private Long Id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Vendor_id", referencedColumnName = "id")
-    private VendorEntity VendorId;
+    @JoinColumn(name = "vendor_id", referencedColumnName = "id")
+    private VendorEntity vendorId;
 
     @Column(name = "product_detail_id", unique = true, nullable = false)
     private Long productDetailId;
@@ -43,7 +43,7 @@ public class VendorProductEntity {
                                                                 Integer displayStatus, Integer salesStatus,
                                                                 Integer salesCount, Integer saveCount){
         return VendorProductEntity.builder()
-                .VendorId(vendorEntity)
+                .vendorId(vendorEntity)
                 .productDetailId(productDetailId)
                 .displayStatus(displayStatus)
                 .salesStatus(salesStatus)

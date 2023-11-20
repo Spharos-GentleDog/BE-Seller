@@ -1,23 +1,31 @@
 package egenius.Vendor.application.service;
 
 import egenius.Vendor.application.ports.in.port.CreateVendorProductUseCase;
+import egenius.Vendor.application.ports.in.port.GetVendorProductUseCase;
 import egenius.Vendor.application.ports.in.port.UpdateVendorProductUseCase;
 import egenius.Vendor.application.ports.in.query.CreateVendorProductQuery;
+import egenius.Vendor.application.ports.in.query.GetVendorProductQuery;
 import egenius.Vendor.application.ports.in.query.UpdateVendorProductQuery;
+import egenius.Vendor.application.ports.out.dto.GetVendorProductDto;
 import egenius.Vendor.application.ports.out.port.CreateVendorProductPort;
+import egenius.Vendor.application.ports.out.port.GetVendorProductPort;
 import egenius.Vendor.application.ports.out.port.UpdateVendorProductPort;
 import egenius.Vendor.domain.VendorProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class VendorProductService implements CreateVendorProductUseCase , UpdateVendorProductUseCase {
+public class VendorProductService implements CreateVendorProductUseCase , UpdateVendorProductUseCase,
+        GetVendorProductUseCase {
 
     private final CreateVendorProductPort createVendorProductPort;
     private final UpdateVendorProductPort updateVendorProductPort;
+    private final GetVendorProductPort getVendorProductPort;
 
     @Override
     public void createVendorProduct(CreateVendorProductQuery createVendorProductQuery) {
@@ -51,5 +59,12 @@ public class VendorProductService implements CreateVendorProductUseCase , Update
                         updateVendorProductQuery.getSaveCount()
                 )
         );
+    }
+
+    @Override
+    public List<GetVendorProductDto> getVendorProduct(GetVendorProductQuery getVendorProductQuery) {
+
+
+        return getVendorProductPort.getVendorProduct(getVendorProductQuery.getVendorEmail());
     }
 }

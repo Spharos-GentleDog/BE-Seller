@@ -3,9 +3,11 @@ package egenius.Vendor.adaptor.web.controller;
 import egenius.Vendor.adaptor.web.request.RequestCreateVendorProduct;
 import egenius.Vendor.adaptor.web.request.RequestUpdateVendorProduct;
 import egenius.Vendor.application.ports.in.port.CreateVendorProductUseCase;
+import egenius.Vendor.application.ports.in.port.GetVendorProductUseCase;
 import egenius.Vendor.application.ports.in.port.SignUpUseCase;
 import egenius.Vendor.application.ports.in.port.UpdateVendorProductUseCase;
 import egenius.Vendor.application.ports.in.query.CreateVendorProductQuery;
+import egenius.Vendor.application.ports.in.query.GetVendorProductQuery;
 import egenius.Vendor.application.ports.in.query.UpdateVendorProductQuery;
 import egenius.Vendor.global.common.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class VendorProductController {
 
     private final CreateVendorProductUseCase createVendorProductUseCase;
     private final UpdateVendorProductUseCase updateVendorProductUseCase;
+    private final GetVendorProductUseCase getVendorProductUseCase;
 
     // 상품 등록
     @PostMapping("/createVendorProduct")
@@ -48,6 +51,11 @@ public class VendorProductController {
     }
 
     //재고 조회
-
+    @GetMapping("/getVendorProduct")
+    public BaseResponse<?> getVendorProduct(@RequestHeader("email") String vendorEmail){
+        log.info("상품 조회: {}", vendorEmail);
+        return new BaseResponse<>(getVendorProductUseCase.getVendorProduct(
+                GetVendorProductQuery.toQuery(vendorEmail)));
+    }
 
 }

@@ -6,7 +6,9 @@ import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.Display
 import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.SalesStatusConverter;
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorProductRepository;
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorRepository;
+import egenius.Vendor.application.ports.out.dto.GetVendorProductDto;
 import egenius.Vendor.application.ports.out.port.CreateVendorProductPort;
+import egenius.Vendor.application.ports.out.port.GetVendorProductPort;
 import egenius.Vendor.application.ports.out.port.UpdateVendorProductPort;
 import egenius.Vendor.domain.VendorProduct;
 import egenius.Vendor.domain.enums.DisplayStatus;
@@ -19,12 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVendorProductPort {
+public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVendorProductPort, GetVendorProductPort {
 
     private final VendorProductRepository vendorProductRepository;
     private final VendorRepository vendorRepository;
@@ -82,5 +86,45 @@ public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVend
         );
 
         vendorProductRepository.save(vendorProductEntity);
+    }
+
+    @Override
+    public List<GetVendorProductDto> getVendorProduct(String vendorEmail) {
+
+        log.info("판매자 상품 조회");
+        Optional<VendorEntity> vendorEntity = vendorRepository.findByVendorEmail(vendorEmail);
+        if(vendorEntity.isEmpty()){
+            throw new IllegalArgumentException("존재하지 않는 이메일입니다.");
+        }
+
+        List<VendorProductEntity> vendorProductEntityList = vendorProductRepository.findAllByVendorId(vendorEntity.get());
+
+        if(vendorProductEntityList.isEmpty()){
+            throw new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT);
+        }
+
+        List<GetVendorProductDto> getVendorProductDtoList =
+                vendorProductEntityList.stream()
+                        .map(vendorProductEntity -> {
+
+                            DisplayStatus displayStatus = displayStatusConverter.convertToEntityAttribute(
+                                    vendorProductEntity.getDisplayStatus());
+                            SalesStatus salesStatus = salesStatusConverter.convertToEntityAttribute(
+                                    vendorProductEntity.getSalesStatus());
+
+                            String displayStatusName = displayStatus.getNameValue();
+                            String salesStatusName = salesStatus.getNameValue();
+
+                            return GetVendorProductDto.fromVendorProduct(
+                                    vendorProductEntity.getProductDetailId(),
+                                    displayStatusName,
+                                    salesStatusName,
+                                    vendorProductEntity.getSalesCount(),
+                                    vendorProductEntity.getSaveCount());
+
+                        })
+                        .collect(Collectors.toList());
+        return getVendorProductDtoList;
+
     }
 }
