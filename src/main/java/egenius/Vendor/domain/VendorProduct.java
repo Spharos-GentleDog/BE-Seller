@@ -60,4 +60,12 @@ public class VendorProduct {
                 .build();
     }
 
+    //상품 삭제
+    public static VendorProduct deleteVendorProduct(String vendorEmail, Long productDetailId) {
+        return VendorProduct.builder()
+                .vendorEmail(vendorEmail)
+                .productDetailId(productDetailId)
+                .build();
+    }
+
 }

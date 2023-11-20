@@ -8,6 +8,7 @@ import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorProductRepos
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorRepository;
 import egenius.Vendor.application.ports.out.dto.GetVendorProductDto;
 import egenius.Vendor.application.ports.out.port.CreateVendorProductPort;
+import egenius.Vendor.application.ports.out.port.DeleteVendorProductPort;
 import egenius.Vendor.application.ports.out.port.GetVendorProductPort;
 import egenius.Vendor.application.ports.out.port.UpdateVendorProductPort;
 import egenius.Vendor.domain.VendorProduct;
@@ -28,7 +29,8 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVendorProductPort, GetVendorProductPort {
+public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVendorProductPort, GetVendorProductPort,
+        DeleteVendorProductPort {
 
     private final VendorProductRepository vendorProductRepository;
     private final VendorRepository vendorRepository;
@@ -63,6 +65,7 @@ public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVend
 
     }
 
+    //todo : 상품 정보 변경 이거 id 값 프론트에서 받으면 된느데 왜 이렇게 짰지........ 나중에 바꾸기
     @Override
     public void updateVendorProduct(VendorProduct vendorProduct) {
         log.info("판매자 상품 정보 변경");
@@ -72,7 +75,9 @@ public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVend
         );
 
         VendorProductEntity vendorProductEntity =
-                vendorProductRepository.findByProductDetailId(vendorProduct.getProductDetailId());
+                vendorProductRepository.findByVendorIdAndProductDetailId(
+                        vendorEntity,
+                        vendorProduct.getProductDetailId());
 
         if(vendorProductEntity == null){
             throw new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT);
@@ -126,5 +131,25 @@ public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVend
                         .collect(Collectors.toList());
         return getVendorProductDtoList;
 
+    }
+
+    @Override
+    public void deleteVendorProduct(VendorProduct vendorProduct) {
+        log.info("판매자 상품 삭제");
+
+        VendorEntity vendorEntity = vendorRepository.findByVendorEmail(vendorProduct.getVendorEmail())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_VENDOR)
+                );
+
+        VendorProductEntity vendorProductEntity =
+                vendorProductRepository.findByVendorIdAndProductDetailId(
+                        vendorEntity,
+                        vendorProduct.getProductDetailId());
+
+        if(vendorProductEntity == null){
+            throw new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT);
+        }
+
+        vendorProductRepository.delete(vendorProductEntity);
     }
 }

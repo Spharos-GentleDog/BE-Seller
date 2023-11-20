@@ -63,8 +63,6 @@ public class VendorProductEntity {
 
     }
 
-    //재고 조회
-
-    //재고 삭제
+    //상품 삭제
 
 }

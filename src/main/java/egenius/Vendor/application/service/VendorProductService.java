@@ -1,13 +1,16 @@
 package egenius.Vendor.application.service;
 
 import egenius.Vendor.application.ports.in.port.CreateVendorProductUseCase;
+import egenius.Vendor.application.ports.in.port.DeleteVendorProductUseCase;
 import egenius.Vendor.application.ports.in.port.GetVendorProductUseCase;
 import egenius.Vendor.application.ports.in.port.UpdateVendorProductUseCase;
 import egenius.Vendor.application.ports.in.query.CreateVendorProductQuery;
+import egenius.Vendor.application.ports.in.query.DeleteVendorProductQuery;
 import egenius.Vendor.application.ports.in.query.GetVendorProductQuery;
 import egenius.Vendor.application.ports.in.query.UpdateVendorProductQuery;
 import egenius.Vendor.application.ports.out.dto.GetVendorProductDto;
 import egenius.Vendor.application.ports.out.port.CreateVendorProductPort;
+import egenius.Vendor.application.ports.out.port.DeleteVendorProductPort;
 import egenius.Vendor.application.ports.out.port.GetVendorProductPort;
 import egenius.Vendor.application.ports.out.port.UpdateVendorProductPort;
 import egenius.Vendor.domain.VendorProduct;
@@ -21,11 +24,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class VendorProductService implements CreateVendorProductUseCase , UpdateVendorProductUseCase,
-        GetVendorProductUseCase {
+        GetVendorProductUseCase, DeleteVendorProductUseCase {
 
     private final CreateVendorProductPort createVendorProductPort;
     private final UpdateVendorProductPort updateVendorProductPort;
     private final GetVendorProductPort getVendorProductPort;
+    private final DeleteVendorProductPort deleteVendorProductPort;
 
     @Override
     public void createVendorProduct(CreateVendorProductQuery createVendorProductQuery) {
@@ -61,10 +65,22 @@ public class VendorProductService implements CreateVendorProductUseCase , Update
         );
     }
 
+    // 상품 정보 가져오기
     @Override
     public List<GetVendorProductDto> getVendorProduct(GetVendorProductQuery getVendorProductQuery) {
-
-
         return getVendorProductPort.getVendorProduct(getVendorProductQuery.getVendorEmail());
     }
+
+    //상품 삭제
+    @Override
+    public void deleteVendorProduct(DeleteVendorProductQuery deleteVendorProductQuery) {
+        deleteVendorProductPort.deleteVendorProduct(
+                VendorProduct.deleteVendorProduct(
+                        deleteVendorProductQuery.getVendorEmail(),
+                        deleteVendorProductQuery.getProductDetailId()
+                )
+        );
+    }
+
+
 }

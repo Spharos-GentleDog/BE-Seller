@@ -2,11 +2,9 @@ package egenius.Vendor.adaptor.web.controller;
 
 import egenius.Vendor.adaptor.web.request.RequestCreateVendorProduct;
 import egenius.Vendor.adaptor.web.request.RequestUpdateVendorProduct;
-import egenius.Vendor.application.ports.in.port.CreateVendorProductUseCase;
-import egenius.Vendor.application.ports.in.port.GetVendorProductUseCase;
-import egenius.Vendor.application.ports.in.port.SignUpUseCase;
-import egenius.Vendor.application.ports.in.port.UpdateVendorProductUseCase;
+import egenius.Vendor.application.ports.in.port.*;
 import egenius.Vendor.application.ports.in.query.CreateVendorProductQuery;
+import egenius.Vendor.application.ports.in.query.DeleteVendorProductQuery;
 import egenius.Vendor.application.ports.in.query.GetVendorProductQuery;
 import egenius.Vendor.application.ports.in.query.UpdateVendorProductQuery;
 import egenius.Vendor.global.common.response.BaseResponse;
@@ -23,6 +21,7 @@ public class VendorProductController {
     private final CreateVendorProductUseCase createVendorProductUseCase;
     private final UpdateVendorProductUseCase updateVendorProductUseCase;
     private final GetVendorProductUseCase getVendorProductUseCase;
+    private final DeleteVendorProductUseCase deleteVendorProductUseCase;
 
     // 상품 등록
     @PostMapping("/createVendorProduct")
@@ -56,6 +55,16 @@ public class VendorProductController {
         log.info("상품 조회: {}", vendorEmail);
         return new BaseResponse<>(getVendorProductUseCase.getVendorProduct(
                 GetVendorProductQuery.toQuery(vendorEmail)));
+    }
+
+    // 상품 삭제
+    @DeleteMapping("/deleteVendorProduct/{productDetailId}")
+    public BaseResponse<?> deleteVendorProduct(@RequestHeader("email") String vendorEmail,
+                                               @PathVariable Long productDetailId){
+        log.info("상품 삭제: {} {}", vendorEmail, productDetailId);
+        deleteVendorProductUseCase.deleteVendorProduct(
+                DeleteVendorProductQuery.toQuery(vendorEmail, productDetailId));
+        return new BaseResponse<>();
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface VendorProductRepository extends JpaRepository<VendorProductEntity, Long> {
 
-    VendorProductEntity findByProductDetailId(Long productDetailId);
+    VendorProductEntity findByVendorIdAndProductDetailId(VendorEntity vendorEntity, Long productDetailId);
 
     List<VendorProductEntity> findAllByVendorId(VendorEntity vendorEntity);
 }
