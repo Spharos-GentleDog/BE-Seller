@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 올바르지 않은 객체 생성을 막아준다
-@Builder
+@Builder(toBuilder = true)
 @Table(name = "Vendor_product")
 public class VendorProductEntity {
 
@@ -51,5 +51,20 @@ public class VendorProductEntity {
                 .saveCount(saveCount)
                 .build();
     }
+
+    //재고 수정
+    public void updateVendorProductEntity(Integer displayStatus, Integer salesStatus,
+                                                 Integer salesCount, Integer saveCount){
+
+        this.displayStatus = displayStatus;
+        this.salesStatus = salesStatus;
+        this.salesCount = salesCount;
+        this.saveCount = saveCount;
+
+    }
+
+    //재고 조회
+
+    //재고 삭제
 
 }

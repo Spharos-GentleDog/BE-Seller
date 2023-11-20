@@ -34,4 +34,30 @@ public class VendorProduct {
                 .build();
     }
 
+    //재고 수정
+    public static VendorProduct updateVendorProduct(String vendorEmail, Long productDetailId, String displayStatus,
+                                                    String salesStatus, Integer salesCount, Integer saveCount) {
+        return VendorProduct.builder()
+                .vendorEmail(vendorEmail)
+                .productDetailId(productDetailId)
+                .displayStatus(displayStatus)
+                .salesStatus(salesStatus)
+                .salesCount(salesCount)
+                .saveCount(saveCount)
+                .build();
+    }
+
+    //재고조회
+    public static VendorProduct getVendorProduct(String vendorEmail, Long productDetailId, String displayStatus,
+                                                    String salesStatus, Integer salesCount, Integer saveCount) {
+        return VendorProduct.builder()
+                .vendorEmail(vendorEmail)
+                .productDetailId(productDetailId)
+                .displayStatus(displayStatus)
+                .salesStatus(salesStatus)
+                .salesCount(salesCount)
+                .saveCount(saveCount)
+                .build();
+    }
+
 }

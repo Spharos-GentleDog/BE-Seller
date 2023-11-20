@@ -32,7 +32,7 @@ public enum BaseResponseStatus {
     WRONG_AUTH_CODE(HttpStatus.NOT_FOUND, false, 3008,"인증번호가 일치하지 않습니다"),
     SALES_STATUS_IS_NOT_FOUND(HttpStatus.NOT_FOUND, false, 3009,"존재하지 않는 판매 상태 입니다"),
     DISPLAY_STATUS_IS_NOT_FOUND(HttpStatus.NOT_FOUND, false, 3010,"존재하지 않는 진열 상태 입니다"),
-    ;
+    NO_EXIST_PRODUCT(HttpStatus.NOT_FOUND, false, 3011,"존재하지 않는 상품 입니다"),;
     private final HttpStatusCode httpStatusCode;
     private final boolean isSuccess;
     private final int code;

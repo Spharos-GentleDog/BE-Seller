@@ -7,9 +7,12 @@ import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.SalesSt
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorProductRepository;
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorRepository;
 import egenius.Vendor.application.ports.out.port.CreateVendorProductPort;
+import egenius.Vendor.application.ports.out.port.UpdateVendorProductPort;
 import egenius.Vendor.domain.VendorProduct;
 import egenius.Vendor.domain.enums.DisplayStatus;
 import egenius.Vendor.domain.enums.SalesStatus;
+import egenius.Vendor.global.common.exception.BaseException;
+import egenius.Vendor.global.common.response.BaseResponseStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +24,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VendorProductAdaptor implements CreateVendorProductPort {
+public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVendorProductPort {
 
     private final VendorProductRepository vendorProductRepository;
     private final VendorRepository vendorRepository;
@@ -54,5 +57,30 @@ public class VendorProductAdaptor implements CreateVendorProductPort {
         ));
 
 
+    }
+
+    @Override
+    public void updateVendorProduct(VendorProduct vendorProduct) {
+        log.info("판매자 상품 정보 변경");
+
+        VendorEntity vendorEntity = vendorRepository.findByVendorEmail(vendorProduct.getVendorEmail())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_VENDOR)
+        );
+
+        VendorProductEntity vendorProductEntity =
+                vendorProductRepository.findByProductDetailId(vendorProduct.getProductDetailId());
+
+        if(vendorProductEntity == null){
+            throw new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT);
+        }
+
+        vendorProductEntity.updateVendorProductEntity(
+                displayStatusConverter.convertToDatabaseColumn(DisplayStatus.ofNameValue(vendorProduct.getDisplayStatus())),
+                salesStatusConverter.convertToDatabaseColumn(SalesStatus.ofNameValue(vendorProduct.getSalesStatus())),
+                vendorProduct.getSalesCount(),
+                vendorProduct.getSaveCount()
+        );
+
+        vendorProductRepository.save(vendorProductEntity);
     }
 }
