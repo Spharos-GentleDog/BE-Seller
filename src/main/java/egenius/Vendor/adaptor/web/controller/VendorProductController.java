@@ -3,10 +3,7 @@ package egenius.Vendor.adaptor.web.controller;
 import egenius.Vendor.adaptor.web.request.RequestCreateVendorProduct;
 import egenius.Vendor.adaptor.web.request.RequestUpdateVendorProduct;
 import egenius.Vendor.application.ports.in.port.*;
-import egenius.Vendor.application.ports.in.query.CreateVendorProductQuery;
-import egenius.Vendor.application.ports.in.query.DeleteVendorProductQuery;
-import egenius.Vendor.application.ports.in.query.GetVendorProductQuery;
-import egenius.Vendor.application.ports.in.query.UpdateVendorProductQuery;
+import egenius.Vendor.application.ports.in.query.*;
 import egenius.Vendor.global.common.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +19,10 @@ public class VendorProductController {
     private final UpdateVendorProductUseCase updateVendorProductUseCase;
     private final GetVendorProductUseCase getVendorProductUseCase;
     private final DeleteVendorProductUseCase deleteVendorProductUseCase;
+    private final GetSalesCountUseCase getSalesCountUseCase;
 
     // 상품 등록
-    @PostMapping("/createVendorProduct")
+    @PostMapping("/vendor-products")
     public BaseResponse<?> createVendorProduct(@RequestBody RequestCreateVendorProduct requestCreateVendorProduct){
         log.info("상품 등록 정보: {}", requestCreateVendorProduct);
         createVendorProductUseCase.createVendorProduct(CreateVendorProductQuery.toQuery(
@@ -35,7 +33,7 @@ public class VendorProductController {
     }
 
     //재고 변경
-    @PostMapping("/updateVendorProduct")
+    @PostMapping("/inventory")
     public BaseResponse<?> updateVendorProduct(@RequestBody RequestUpdateVendorProduct requestUpdateVendorProduct){
         log.info("상품 정보 변경: {}", requestUpdateVendorProduct);
         updateVendorProductUseCase.updateVendorProduct(UpdateVendorProductQuery.toQuery(
@@ -50,7 +48,7 @@ public class VendorProductController {
     }
 
     //재고 조회
-    @GetMapping("/getVendorProduct")
+    @GetMapping("/vendor-products")
     public BaseResponse<?> getVendorProduct(@RequestHeader("email") String vendorEmail){
         log.info("상품 조회: {}", vendorEmail);
         return new BaseResponse<>(getVendorProductUseCase.getVendorProduct(
@@ -58,13 +56,21 @@ public class VendorProductController {
     }
 
     // 상품 삭제
-    @DeleteMapping("/deleteVendorProduct/{productDetailId}")
+    @DeleteMapping("/vendor-products/{productDetailId}")
     public BaseResponse<?> deleteVendorProduct(@RequestHeader("email") String vendorEmail,
                                                @PathVariable Long productDetailId){
         log.info("상품 삭제: {} {}", vendorEmail, productDetailId);
         deleteVendorProductUseCase.deleteVendorProduct(
                 DeleteVendorProductQuery.toQuery(vendorEmail, productDetailId));
         return new BaseResponse<>();
+    }
+
+    //장바구니 재고 조회
+    @GetMapping("/sales-count/{productDetailId}")
+    public BaseResponse<?> getSalesCount(@PathVariable(name = "productDetailId") Long productDetailId){
+        log.info("상품 재고 조회: {}", productDetailId);
+        return new BaseResponse<>(getSalesCountUseCase.getSalesCount(
+                GetSalesCountQuery.toQuery(productDetailId)));
     }
 
 }

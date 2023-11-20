@@ -6,11 +6,9 @@ import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.Display
 import egenius.Vendor.adaptor.infrastructure.mysql.persistance.Converter.SalesStatusConverter;
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorProductRepository;
 import egenius.Vendor.adaptor.infrastructure.mysql.repository.VendorRepository;
+import egenius.Vendor.application.ports.out.dto.GetSalesCountDto;
 import egenius.Vendor.application.ports.out.dto.GetVendorProductDto;
-import egenius.Vendor.application.ports.out.port.CreateVendorProductPort;
-import egenius.Vendor.application.ports.out.port.DeleteVendorProductPort;
-import egenius.Vendor.application.ports.out.port.GetVendorProductPort;
-import egenius.Vendor.application.ports.out.port.UpdateVendorProductPort;
+import egenius.Vendor.application.ports.out.port.*;
 import egenius.Vendor.domain.VendorProduct;
 import egenius.Vendor.domain.enums.DisplayStatus;
 import egenius.Vendor.domain.enums.SalesStatus;
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVendorProductPort, GetVendorProductPort,
-        DeleteVendorProductPort {
+        DeleteVendorProductPort, GetSalesCountPort {
 
     private final VendorProductRepository vendorProductRepository;
     private final VendorRepository vendorRepository;
@@ -151,5 +149,17 @@ public class VendorProductAdaptor implements CreateVendorProductPort, UpdateVend
         }
 
         vendorProductRepository.delete(vendorProductEntity);
+    }
+
+    @Override
+    public GetSalesCountDto getSalesCount(VendorProduct vendorProduct) {
+        VendorProductEntity vendorProductEntity =
+                vendorProductRepository.findByProductDetailId(vendorProduct.getProductDetailId());
+
+        return GetSalesCountDto.fromSalesCount(
+                vendorProductEntity.getProductDetailId(),
+                vendorProductEntity.getSalesCount(),
+                vendorProductEntity.getDisplayStatus()
+        );
     }
 }

@@ -12,4 +12,6 @@ public interface VendorProductRepository extends JpaRepository<VendorProductEnti
     VendorProductEntity findByVendorIdAndProductDetailId(VendorEntity vendorEntity, Long productDetailId);
 
     List<VendorProductEntity> findAllByVendorId(VendorEntity vendorEntity);
+
+    VendorProductEntity findByProductDetailId(Long productDetailId);
 }

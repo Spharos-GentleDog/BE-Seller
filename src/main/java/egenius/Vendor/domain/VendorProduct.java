@@ -68,4 +68,11 @@ public class VendorProduct {
                 .build();
     }
 
+    //장바구니 재고 조회
+    public static VendorProduct getSalesCount(Long productDetailId) {
+        return VendorProduct.builder()
+                .productDetailId(productDetailId)
+                .build();
+    }
+
 }

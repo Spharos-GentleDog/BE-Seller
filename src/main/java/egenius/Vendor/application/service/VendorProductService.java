@@ -1,18 +1,10 @@
 package egenius.Vendor.application.service;
 
-import egenius.Vendor.application.ports.in.port.CreateVendorProductUseCase;
-import egenius.Vendor.application.ports.in.port.DeleteVendorProductUseCase;
-import egenius.Vendor.application.ports.in.port.GetVendorProductUseCase;
-import egenius.Vendor.application.ports.in.port.UpdateVendorProductUseCase;
-import egenius.Vendor.application.ports.in.query.CreateVendorProductQuery;
-import egenius.Vendor.application.ports.in.query.DeleteVendorProductQuery;
-import egenius.Vendor.application.ports.in.query.GetVendorProductQuery;
-import egenius.Vendor.application.ports.in.query.UpdateVendorProductQuery;
+import egenius.Vendor.application.ports.in.port.*;
+import egenius.Vendor.application.ports.in.query.*;
+import egenius.Vendor.application.ports.out.dto.GetSalesCountDto;
 import egenius.Vendor.application.ports.out.dto.GetVendorProductDto;
-import egenius.Vendor.application.ports.out.port.CreateVendorProductPort;
-import egenius.Vendor.application.ports.out.port.DeleteVendorProductPort;
-import egenius.Vendor.application.ports.out.port.GetVendorProductPort;
-import egenius.Vendor.application.ports.out.port.UpdateVendorProductPort;
+import egenius.Vendor.application.ports.out.port.*;
 import egenius.Vendor.domain.VendorProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +16,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class VendorProductService implements CreateVendorProductUseCase , UpdateVendorProductUseCase,
-        GetVendorProductUseCase, DeleteVendorProductUseCase {
+        GetVendorProductUseCase, DeleteVendorProductUseCase, GetSalesCountUseCase {
 
     private final CreateVendorProductPort createVendorProductPort;
     private final UpdateVendorProductPort updateVendorProductPort;
     private final GetVendorProductPort getVendorProductPort;
     private final DeleteVendorProductPort deleteVendorProductPort;
+    private final GetSalesCountPort getSalesCountPort;
 
     @Override
     public void createVendorProduct(CreateVendorProductQuery createVendorProductQuery) {
@@ -65,7 +58,7 @@ public class VendorProductService implements CreateVendorProductUseCase , Update
         );
     }
 
-    // 상품 정보 가져오기
+    // 상품 정보 가져오기 (판매자 재고 조회)
     @Override
     public List<GetVendorProductDto> getVendorProduct(GetVendorProductQuery getVendorProductQuery) {
         return getVendorProductPort.getVendorProduct(getVendorProductQuery.getVendorEmail());
@@ -81,6 +74,15 @@ public class VendorProductService implements CreateVendorProductUseCase , Update
                 )
         );
     }
+
+    @Override
+    public GetSalesCountDto getSalesCount(GetSalesCountQuery getSalesCountQuery) {
+
+        return getSalesCountPort.getSalesCount(VendorProduct.getSalesCount(
+                getSalesCountQuery.getProductDetailId()));
+    }
+
+    //장바구니 재고 조회
 
 
 }
