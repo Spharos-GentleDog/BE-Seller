@@ -62,7 +62,8 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
                 vendor.getCallCenterNumber(),
                 vendor.getManagerName(),
                 vendor.getManagerPhoneNumber(),
-                VendorStatusCode
+                VendorStatusCode,
+                "VENDOR"
                 ));
 
         BusinessTypes businessTypeEnum = BusinessTypes.ofCodeValue(vendorEntity.getBusinessType());
@@ -113,7 +114,8 @@ public class VendorAdaptor implements VendorPort, CheckEmailPort, FindVendorPort
                 vendorEntity.getPassword(),
                 vendorEntity.getVendorName(),
                 vendorEntity.getBrandLogoImageUrl(),
-                vendorEntity.getDeactivate()
+                vendorEntity.getDeactivate(),
+                vendorEntity.getRole()
         );
 
     }

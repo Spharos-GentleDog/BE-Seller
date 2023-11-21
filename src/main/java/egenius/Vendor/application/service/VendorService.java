@@ -128,14 +128,14 @@ public class VendorService implements SignUpUseCase, CheckEmailUseCase, SignInUs
         System.out.print("jwt : " + jwt);
         System.out.print("jwt : " + jwt);
 
-        log.info("권한정보{}", vendor.getAuthorities());
+        log.info("권한정보{}", vendor.getRole());
 
         return SignInDto.formSignIn(jwt,
                 refreshToken,
                 vendor.getVendorEmail(),
                 vendor.getBrandName(),
                 vendor.getBrandLogoImageUrl(),
-                vendor.getAuthorities()
+                vendor.getRole()
                 );
     }
 

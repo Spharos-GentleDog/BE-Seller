@@ -42,6 +42,7 @@ public class Vendor implements UserDetails {
     private String managerPhoneNumber;
     private VendorStatus VendorStatus;
     private LocalDateTime deactivate;
+    private String role;
 
 
     public static Vendor signUpVendor(String vendorEmail, String businessNumber, String password, String mailOrderNumber,
@@ -70,13 +71,14 @@ public class Vendor implements UserDetails {
     }
 
     public static Vendor signInVendor(String vendorEmail, String password, String brandName,
-                                      String brandLogoImageUrl,LocalDateTime deactivate) {
+                                      String brandLogoImageUrl,LocalDateTime deactivate,String role) {
         return Vendor.builder()
                 .vendorEmail(vendorEmail)
                 .password(password)
                 .brandName(brandName)
                 .brandLogoImageUrl(brandLogoImageUrl)
                 .deactivate(deactivate)
+                .role(role)
                 .build();
     }
 

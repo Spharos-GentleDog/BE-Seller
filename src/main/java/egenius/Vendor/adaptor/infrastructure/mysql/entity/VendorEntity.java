@@ -77,13 +77,16 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
     @Column(name = "deactivate")
     private LocalDateTime deactivate;
 
+    @Column(name = "role", nullable = false, length = 20)
+    private String role;
+
 
     public static VendorEntity signUpVendor(String vendorEmail, String businessNumber, String password,
                                             String mailOrderNumber, String brandName, String brandLogoImageUrl,
                                             String brandContent, String homepageUrl, Integer businessType,
                                             String companyName, String companyAddress, LocalDate openedAt,
                                             String vendorName, String callCenterNumber,String managerName,
-                                            String managerPhoneNumber, Integer vendorStatus) {
+                                            String managerPhoneNumber, Integer vendorStatus, String role) {
         return VendorEntity.builder()
                 .vendorEmail(vendorEmail)
                 .businessNumber(businessNumber)
@@ -102,6 +105,7 @@ public class VendorEntity extends BaseTimeEntity implements UserDetails {
                 .managerName(managerName)
                 .managerPhoneNumber(managerPhoneNumber)
                 .vendorStatus(vendorStatus)
+                .role(role)
                 .build();
     }
 
